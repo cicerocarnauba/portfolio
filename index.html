@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Cícero Higor — Engenheiro de Software</title>
+  <meta name="description" content="Portfólio de Cícero Higor, Engenheiro de Software (UFC Quixadá) com atuação em desenvolvimento Full Stack, garantia de qualidade (QA) e gestão de projetos.">
+  <meta name="theme-color" content="#0B110D">
+  <meta property="og:title" content="Cícero Higor — Engenheiro de Software">
+  <meta property="og:description" content="Engenheiro de Software com atuação em desenvolvimento Full Stack, QA e gestão de projetos. Projetos reais com grafo Git interativo.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Ccircle cx='5' cy='4' r='2.3' stroke='%2358C496' stroke-width='1.8'/%3E%3Ccircle cx='5' cy='16' r='2.3' stroke='%238AC960' stroke-width='1.8'/%3E%3Ccircle cx='15' cy='8' r='2.3' stroke='%23E2B347' stroke-width='1.8'/%3E%3Cpath d='M5 6.3v7.4M15 10.3c0 2.6-2.4 3.4-5.2 4.2' stroke='%23344E3B' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400..700&family=JetBrains+Mono:wght@400..600&display=swap">
+  <link rel="stylesheet" href="./css/main.css">
+  <script type="module" src="./js/main.js"></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#inicio">Pular para o conteúdo principal</a>
+  <div class="spot" id="spot" aria-hidden="true"></div>
+
+  <!-- Componente: Rail lateral de navegação e leitura -->
+  <side-rail></side-rail>
+
+  <div class="wrap">
+    <!-- Componente: Barra de navegação superior e alternador de tema -->
+    <app-header></app-header>
+
+    <main>
+      <!-- Seção 00: Hero & Grafo Git -->
+      <section class="hero" id="inicio">
+        <p class="where">Quixadá, Ceará · Engenharia de Software na UFC</p>
+
+        <div class="hero-top-row">
+          <h1 class="name" id="name">Cícero Higor</h1>
+
+          <div class="hero-cta">
+            <a class="btn mag" href="#projetos">
+              <span>Explorar projetos</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+              </svg>
+            </a>
+            <a class="btn ghost mag" href="https://github.com/cicerocarnauba" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/>
+              </svg>
+              <span>GitHub</span>
+            </a>
+          </div>
+        </div>
+
+        <p class="role">
+          Engenheiro de Software que
+          <span class="typed" id="typed">atua no desenvolvimento</span><span class="caret" aria-hidden="true"></span>
+        </p>
+
+        <p class="lead">
+          Construo aplicações mobile e sistemas web com Node.js e React. Atuo de ponta a ponta no ciclo de software: desenvolvo interfaces e APIs, garanto a qualidade das entregas com testes e organizo o fluxo de trabalho da equipe.
+        </p>
+
+        <div class="hero-status">
+          <span class="status-pill">
+            <span class="status-dot" aria-hidden="true"></span>
+            Disponível para estágio e júnior
+          </span>
+        </div>
+
+        <!-- Componente: Grafo de commits interativo -->
+        <git-graph></git-graph>
+      </section>
+
+      <!-- Seção 01: Sobre -->
+      <section class="sec" id="sobre">
+        <div class="about">
+          <div class="sec-head rv" style="margin-bottom:0">
+            <span class="eyebrow">01 · Perfil &amp; Atuação</span>
+            <h2>Desenvolvimento, qualidade e gestão</h2>
+            <p>
+              Com formação em Engenharia de Software na UFC Quixadá e base em Design Digital, atuo conectando código, qualidade e organização. Participo desde a concepção da interface e construção da API até os testes e o acompanhamento das entregas.
+            </p>
+            <div class="about-highlight">
+              <div><strong>140+</strong><span>commits sem merge</span></div>
+              <div><strong>7</strong><span>projetos práticos</span></div>
+              <div><strong>3</strong><span>frentes de atuação</span></div>
+            </div>
+          </div>
+
+          <ul class="roles">
+            <li class="rv" style="--c:var(--b1)">
+              <span class="role-ic" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 18 22 12 16 6"/>
+                  <polyline points="8 6 2 12 8 18"/>
+                </svg>
+              </span>
+              <h3>Desenvolvimento Full Stack</h3>
+              <p>Construção de aplicativos mobile em React Native e interfaces web em React integradas a APIs REST em Node.js e PostgreSQL, incluindo autenticação JWT e sincronização offline.</p>
+            </li>
+            <li class="rv" style="--c:var(--b3)">
+              <span class="role-ic" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+              </span>
+              <h3>Garantia de Qualidade (QA)</h3>
+              <p>Validação funcional das entregas, escrita de testes unitários no back-end e correção de casos críticos — como tratamento de datas, limites numéricos em medições e fluxos de exportação.</p>
+            </li>
+            <li class="rv" style="--c:var(--b2)">
+              <span class="role-ic" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="18" r="3"/>
+                  <circle cx="6" cy="6" r="3"/>
+                  <path d="M13 6h3a2 2 0 0 1 2 2v7"/>
+                  <line x1="6" y1="9" x2="6" y2="21"/>
+                </svg>
+              </span>
+              <h3>Gestão de Projetos</h3>
+              <p>Organização de tarefas, alinhamento de prioridades com a equipe e padronização do histórico com Conventional Commits, mantendo o fluxo de entrega previsível e rastreável.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Seção 02: Projetos -->
+      <section class="sec" id="projetos">
+        <div class="sec-head rv">
+          <span class="eyebrow">02 · Repositórios em Destaque</span>
+          <h2>Projetos</h2>
+          <p>
+            Sete projetos selecionados entre os meus repositórios. Os dois primeiros destacam soluções completas desenvolvidas em equipe, com métricas extraídas diretamente do histórico do Git (sem contar merges).
+          </p>
+        </div>
+
+        <!-- Destaque 1: Medições de Obras -->
+        <article class="feat rv" style="--c:var(--b1)">
+          <div class="feat-copy">
+            <span class="branch-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="6" y1="3" x2="6" y2="15"/>
+                <circle cx="18" cy="6" r="3"/>
+                <circle cx="6" cy="18" r="3"/>
+                <path d="M18 9a9 9 0 0 1-9 9"/>
+              </svg>
+              branch: projeto-integrado-3
+            </span>
+            <h3>Medições de Obras</h3>
+            <p class="sub">Aplicação Mobile &amp; API REST · Gestão de Engenharia</p>
+            <p class="desc">
+              Aplicativo mobile para engenheiros e fiscais registrarem medições físicas e financeiras direto no canteiro, substituindo cadernos e planilhas manuais. Opera com persistência local no aparelho e sincronização automática com a API quando há conexão, além de fotos com geolocalização, importação/exportação Excel e autenticação JWT.
+            </p>
+            <p class="role-line">
+              <strong>Minha atuação:</strong> Desenvolvimento full stack, QA e gestão do projeto — telas em React Native, rotas e banco no back-end, testes unitários, ajustes de segurança e responsividade.
+            </p>
+            <dl class="stats">
+              <div><dt>commits meus</dt><dd data-count="55">55</dd></div>
+              <div><dt>período</dt><dd class="sm">set – out 2026</dd></div>
+              <div><dt>arquitetura</dt><dd class="sm">Offline-first</dd></div>
+            </dl>
+            <ul class="chips">
+              <li>React Native</li><li>Expo</li><li>Node.js</li><li>Express</li><li>PostgreSQL</li><li>SQLite</li><li>Docker</li><li>JWT</li>
+            </ul>
+            <div class="actions">
+              <a class="btn ghost" href="https://github.com/Layssaoliveira26/Projeto-Integrado-3" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/>
+                </svg>
+                <span>Ver no GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Componente: Diagrama interativo Offline-First -->
+          <offline-diagram></offline-diagram>
+        </article>
+
+        <!-- Destaque 2: Consulado Fla-Quixadá -->
+        <article class="feat rev rv" style="--c:var(--b2)">
+          <div class="feat-copy">
+            <span class="branch-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="6" y1="3" x2="6" y2="15"/>
+                <circle cx="18" cy="6" r="3"/>
+                <circle cx="6" cy="18" r="3"/>
+                <path d="M18 9a9 9 0 0 1-9 9"/>
+              </svg>
+              branch: flaquixada-website
+            </span>
+            <h3>Consulado Fla-Quixadá</h3>
+            <p class="sub">Plataforma Web em Produção · Quixadá</p>
+            <p class="desc">
+              Plataforma web com calendário de jogos ao vivo, bolão de palpites, cardápio com preços para associados, loja, portal de notícias e painel administrativo completo com CRUD e autenticação por perfil.
+            </p>
+            <p class="role-line">
+              <strong>Minha atuação:</strong> Desenvolvimento front-end com foco no painel administrativo — módulos de bolão, cardápio, loja e notícias, máscaras de formulário, responsividade e integração com a API.
+            </p>
+            <dl class="stats">
+              <div><dt>commits meus</dt><dd data-count="64">64</dd></div>
+              <div><dt>período</dt><dd class="sm">jun 2026</dd></div>
+              <div><dt>status</dt><dd class="sm">Em produção</dd></div>
+            </dl>
+            <ul class="chips">
+              <li>JavaScript</li><li>Web Components</li><li>HTML e CSS</li><li>Express</li><li>MongoDB</li><li>JWT</li>
+            </ul>
+            <div class="actions">
+              <a class="btn" href="https://flaquixada-website.vercel.app/index.html" target="_blank" rel="noopener noreferrer">
+                <span>Abrir o site</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 17L17 7M7 7h10v10"/>
+                </svg>
+              </a>
+              <a class="btn ghost" href="https://github.com/rudriguu2099/flaquixada-website" target="_blank" rel="noopener noreferrer">Ver no GitHub</a>
+            </div>
+          </div>
+
+          <!-- Componente: Prévia em abas do sistema Fla-Quixadá -->
+          <browser-preview></browser-preview>
+        </article>
+
+        <!-- Componente: Lista expansível de projetos extras -->
+        <project-list></project-list>
+      </section>
+
+      <!-- Seção 03: Stack -->
+      <section class="sec" id="stack">
+        <div class="sec-head rv">
+          <span class="eyebrow">03 · Ecossistema Técnico</span>
+          <h2>Ferramentas que uso</h2>
+          <p>Tudo o que aparece aqui foi aplicado diretamente nos projetos listados acima.</p>
+        </div>
+
+        <!-- Componente: Marquee duplo + Bento Grid de tecnologias -->
+        <stack-section></stack-section>
+      </section>
+
+      <!-- Seção 04: Formação -->
+      <section class="sec" id="formacao">
+        <div class="sec-head rv">
+          <span class="eyebrow">04 · Base Acadêmica</span>
+          <h2>Formação</h2>
+          <p>
+            Minha trajetória une a base em computação do curso técnico, o olhar centrado no usuário do Design Digital e o aprofundamento prático em Engenharia de Software na UFC Quixadá.
+          </p>
+        </div>
+
+        <!-- Componente: Linha do tempo de formação -->
+        <timeline-section></timeline-section>
+      </section>
+
+      <!-- Seção 05: Contato -->
+      <section class="sec" id="contato">
+        <div class="contact-card rv">
+          <div class="sec-head" style="margin-bottom:0">
+            <span class="eyebrow">05 · Contato</span>
+            <h2>Quer conversar?</h2>
+            <p>
+              Estou aberto a oportunidades em Engenharia de Software — atuando no desenvolvimento, na garantia de qualidade ou na gestão de projetos. Meu código e histórico de contribuições estão disponíveis no GitHub.
+            </p>
+          </div>
+          <div class="links" id="links"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Cícero Higor · Quixadá, Ceará</span>
+      <span class="mono">git commit -m "obrigado pela visita"</span>
+    </footer>
+  </div>
+
+</body>
+</html>
+

@@ -1,0 +1,268 @@
+/* ==========================================================================
+   Layout Estrutural — Container, Navbar, Side Rail, Seções e Footer
+   ========================================================================== */
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin-inline: auto;
+}
+
+/* Barra de Navegação Superior */
+app-header {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  z-index: 20;
+  margin-top: 12px;
+}
+
+.top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px 8px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 28px -10px rgba(0, 0, 0, 0.25);
+}
+
+.top::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: -1px;
+  height: 2px;
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--b3), var(--b2), var(--b1));
+  border-radius: 2px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font: 700 1.02rem var(--f-display);
+  letter-spacing: -0.015em;
+}
+
+.brand svg {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.brand-branch {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  margin-left: 4px;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  background: var(--moss-pill);
+  border: 1px solid var(--line);
+  font: 500 0.72rem var(--f-mono);
+  color: var(--b1);
+}
+
+@media (min-width: 520px) {
+  .brand-branch {
+    display: inline-flex;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav a {
+  display: none;
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 7px 13px;
+  border-radius: var(--r-pill);
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav a:hover,
+.nav a.active {
+  color: var(--fg);
+  background: var(--bg-2);
+}
+
+@media (min-width: 760px) {
+  .nav a {
+    display: inline-block;
+  }
+}
+
+/* Rail Lateral de Progresso */
+.rail {
+  position: fixed;
+  left: max(24px, calc(env(safe-area-inset-left, 0px) + 24px));
+  top: 50%;
+  transform: translateY(-50%);
+  height: min(300px, 50vh);
+  width: 14px;
+  display: none;
+  z-index: 15;
+}
+
+@media (min-width: 1100px) {
+  .rail {
+    display: block;
+  }
+}
+
+.rail::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--line);
+}
+
+.rail-fill {
+  position: absolute;
+  left: 6px;
+  top: 0;
+  width: 2px;
+  height: calc(var(--p, 0) * 100%);
+  background: linear-gradient(var(--b3), var(--b2), var(--b1));
+}
+
+.rail a {
+  position: absolute;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--line-strong);
+  transform: translateY(-50%);
+  transition: background 0.25s, border-color 0.25s, transform 0.2s;
+}
+
+.rail a:hover {
+  transform: translateY(-50%) scale(1.2);
+  border-color: var(--b1);
+}
+
+.rail a.on {
+  border-color: var(--b1);
+  background: var(--b1);
+  box-shadow: 0 0 0 4px var(--moss-tint);
+}
+
+.rail a span {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  translate: 0 -50%;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font: 500 0.75rem var(--f-mono);
+  color: var(--fg);
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  transform: translateX(-4px);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.rail a:hover span,
+.rail a:focus-visible span,
+.rail a.on span {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Seções e Cabeçalhos */
+.hero {
+  padding-block: clamp(40px, 6vw, 84px) clamp(24px, 4vw, 48px);
+}
+
+.sec {
+  padding-block: clamp(56px, 7.5vw, 108px);
+}
+
+.sec-head {
+  display: grid;
+  gap: 12px;
+  margin-bottom: clamp(28px, 4vw, 48px);
+  max-width: 100%;
+}
+
+.sec-head p {
+  color: var(--muted);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  font: 600 0.78rem var(--f-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--b1);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  background: var(--b1);
+  border-radius: 2px;
+}
+
+/* Grid Sobre */
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .about {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Rodapé */
+footer {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 28px 0 56px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+footer .mono {
+  color: var(--b1);
+}
+
