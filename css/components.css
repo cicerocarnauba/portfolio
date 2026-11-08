@@ -2204,16 +2204,20 @@ git-graph,
     flex: none;
   }
 
+  /* Garantia de visibilidade imediata no mobile (não some se animação atrasar ou travar) */
   .m-circle {
     width: 68px;
     height: 68px;
     border-width: 4px;
     flex: none;
     text-align: center;
+    opacity: 1;
+    transform: scale(1);
   }
 
   .m-circle.current::after {
     inset: -8px;
+    opacity: 0.45;
   }
 
   .m-year {
@@ -2240,7 +2244,7 @@ git-graph,
 
   .h-timeline-wrap.is-animated .m-stem {
     animation: grow-milestone-stem-h 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-    animation-delay: calc(var(--delay, 0s) + 0.5s);
+    animation-delay: calc(var(--delay, 0s) + 0.3s);
   }
 
   @keyframes grow-milestone-stem-h {
@@ -2275,6 +2279,7 @@ git-graph,
     right: auto;
   }
 
+  /* Conteúdo de texto com visibilidade garantida no mobile */
   .h-milestone.pos-top .m-content,
   .h-milestone.pos-bottom .m-content,
   .m-content {
@@ -2282,6 +2287,8 @@ git-graph,
     max-width: 100%;
     flex: 1;
     min-width: 0;
+    opacity: 1;
+    transform: none;
   }
 
   .h-milestone.pos-top .m-content,
@@ -2308,6 +2315,7 @@ git-graph,
   .m-accent-bar {
     height: 2.5px;
     margin-top: 3px;
+    width: 38px;
   }
 
   .m-inst {

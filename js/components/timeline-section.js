@@ -114,6 +114,9 @@ export class TimelineSection extends HTMLElement {
       </div>
     `;
 
+    // Ativa animação imediatamente se já estiver visível ou por padrão
+    this.playAnimation();
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const wrap = this.querySelector('.h-timeline-wrap');
       if (wrap) wrap.classList.add('is-animated');
