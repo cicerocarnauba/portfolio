@@ -117,3 +117,4 @@ export class PokerPreview extends HTMLElement {
 if (!customElements.get('poker-preview')) {
   customElements.define('poker-preview', PokerPreview);
 }
+

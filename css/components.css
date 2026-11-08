@@ -231,12 +231,10 @@
   border: 1px solid color-mix(in srgb, var(--c) 30%, var(--line-strong));
   background:
     radial-gradient(220px circle at 100% 0%, color-mix(in srgb, var(--c) 15%, transparent), transparent 72%),
-    linear-gradient(160deg, color-mix(in srgb, var(--surface) 88%, transparent), color-mix(in srgb, var(--bg-2) 82%, transparent));
+    var(--portal-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.08),
-    0 14px 32px -14px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--card-shadow);
   color: var(--fg);
   text-align: left;
   cursor: pointer;
@@ -264,7 +262,7 @@
   border-color: var(--c);
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.16),
-    0 22px 42px -12px color-mix(in srgb, var(--c) 32%, rgba(0, 0, 0, 0.6));
+    0 22px 42px -12px color-mix(in srgb, var(--c) 28%, transparent);
 }
 
 .category-portal-card:hover::before {
@@ -396,7 +394,7 @@ git-graph,
 .graph-wrap {
   border: 1px solid var(--line-strong);
   border-radius: var(--r-lg);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 90%, var(--bg)), var(--bg-2));
+  background: var(--card-bg);
   box-shadow: var(--shadow);
   overflow: hidden;
 }
@@ -483,7 +481,7 @@ git-graph,
   border-radius: var(--r-md);
   background: var(--surface);
   border: 1px solid var(--c, var(--line-strong));
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38);
+  box-shadow: var(--shadow);
 }
 
 .tip-head {
@@ -646,7 +644,7 @@ git-graph,
   border: 1px solid color-mix(in srgb, var(--c, var(--b1)) 45%, var(--line-strong));
   background:
     radial-gradient(320px circle at 95% 10%, color-mix(in srgb, var(--c, var(--b1)) 14%, transparent), transparent 70%),
-    linear-gradient(160deg, var(--surface), var(--bg-2));
+    var(--card-bg);
   box-shadow: var(--shadow);
   padding: clamp(22px, 3vw, 34px);
   display: flex;
@@ -837,7 +835,7 @@ git-graph,
   padding: clamp(20px, 2.6vw, 32px);
   border: 1px solid var(--line-strong);
   border-radius: var(--r-xl);
-  background: linear-gradient(165deg, var(--surface), var(--bg-2));
+  background: var(--card-bg);
   box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
@@ -1279,12 +1277,12 @@ git-graph,
   background: var(--surface-2);
   border: 1px solid var(--line-strong);
   color: var(--fg);
-  box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 8px -2px rgba(13, 30, 19, 0.14);
 }
 
 .p-player-card.is-you .p-card-val {
   background: var(--b3);
-  color: #0b1a10;
+  color: var(--ink);
   border-color: var(--b3);
 }
 
@@ -1341,7 +1339,7 @@ git-graph,
 
 .p-deck-card.is-selected {
   background: var(--b3);
-  color: #0b1a10;
+  color: var(--ink);
   border-color: var(--b3);
   transform: translateY(-3px);
 }
@@ -1880,7 +1878,7 @@ git-graph,
   border: 1px solid var(--line-strong);
   background:
     radial-gradient(420px circle at 90% 10%, var(--moss-tint), transparent 70%),
-    linear-gradient(160deg, var(--surface), var(--bg-2));
+    var(--card-bg);
   box-shadow: var(--shadow);
   display: grid;
   gap: 22px;
@@ -1945,6 +1943,7 @@ git-graph,
   .about-highlight,
   .sec-head p,
   .feat .role-line,
+  .feat-vis,
   .feat offline-diagram,
   .feat browser-preview,
   .feat poker-preview,
@@ -2084,8 +2083,8 @@ git-graph,
   .proj-stage-head {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 6px;
+    margin-bottom: 8px;
   }
 
   .proj-deck-tabs {
@@ -2097,19 +2096,26 @@ git-graph,
   }
 
   .proj-tab {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     justify-content: flex-start;
-    gap: 2px;
-    padding: 7px 9px;
-    border-radius: 12px;
+    gap: 6px;
+    padding: 6px 9px;
+    border-radius: 10px;
     min-width: 0;
+  }
+
+  .proj-tab span {
+    font-size: 0.68rem;
+    flex-shrink: 0;
   }
 
   .proj-tab strong {
     font-size: 0.72rem;
-    line-height: 1.18;
-    white-space: normal;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     width: 100%;
   }
 
@@ -2138,14 +2144,18 @@ git-graph,
   }
 
   .m-desc {
-    font-size: 0.76rem;
-    line-height: 1.38;
-    margin-top: 4px;
+    font-size: 0.72rem;
+    line-height: 1.32;
+    margin-top: 3px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .h-timeline-track {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
     height: auto;
     position: relative;
   }
@@ -2153,9 +2163,9 @@ git-graph,
   .h-timeline-track::before {
     content: "";
     position: absolute;
-    left: 43px;
-    top: 20px;
-    bottom: 20px;
+    left: 36px;
+    top: 16px;
+    bottom: 16px;
     width: 2px;
     background: linear-gradient(180deg, var(--b3), var(--b2), var(--b1));
     border-radius: 2px;
@@ -2169,9 +2179,9 @@ git-graph,
     align-items: center;
     justify-content: flex-start;
     text-align: left;
-    gap: 14px;
-    padding: 11px 14px;
-    border-radius: 16px;
+    gap: 11px;
+    padding: 9px 12px;
+    border-radius: 14px;
     border: 1px solid var(--line-strong);
     background: var(--surface);
     position: relative;
@@ -2188,14 +2198,16 @@ git-graph,
   }
 
   .m-circle {
-    width: 58px;
-    height: 58px;
-    border-width: 3.5px;
+    width: 48px;
+    height: 48px;
+    border-width: 3px;
     flex: none;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .m-year {
-    font-size: 1.05rem;
+    font-size: 0.92rem;
   }
 
   .m-sub {
@@ -2208,35 +2220,43 @@ git-graph,
     margin: 0;
     align-items: flex-start;
     max-width: 100%;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .m-header {
     align-items: flex-start;
   }
 
+  .m-status-pill {
+    font-size: 0.62rem;
+    padding: 1px 7px;
+    margin-bottom: 3px;
+  }
+
   .m-title {
-    font-size: 0.9rem;
+    font-size: 0.84rem;
   }
 
   .m-inst {
-    margin-top: 2px;
-    font-size: 0.72rem;
+    margin-top: 1px;
+    font-size: 0.68rem;
   }
 
   .m-repo-link {
-    margin-top: 6px;
-    padding: 3px 9px;
-    font-size: 0.68rem;
+    margin-top: 4px;
+    padding: 2px 8px;
+    font-size: 0.65rem;
   }
 }
 
 @media (max-width: 640px) {
   h2 {
-    font-size: clamp(1.45rem, 6vw, 1.85rem);
+    font-size: clamp(1.25rem, 5.4vw, 1.55rem);
   }
 
   .hero-clean-stage {
-    gap: 16px;
+    gap: 12px;
   }
 
   .where,
@@ -2248,22 +2268,23 @@ git-graph,
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    margin-top: 8px;
+    gap: 8px;
+    margin-top: 4px;
   }
 
   .name {
-    font-size: clamp(2.1rem, 8.8vw, 2.8rem);
+    font-size: clamp(1.9rem, 8.2vw, 2.45rem);
   }
 
   .hero-clean-actions .btn {
-    padding: 7px 12px;
-    font-size: 0.78rem;
+    padding: 6px 11px;
+    font-size: 0.75rem;
   }
 
   .role {
-    margin-top: 8px;
-    font-size: 1.05rem;
+    margin-top: 6px;
+    font-size: clamp(0.88rem, 4vw, 1rem);
+    line-height: 1.3;
   }
 
   .typed {
@@ -2273,26 +2294,26 @@ git-graph,
   /* Categorias em Grid 2x2 Clean na Home Mobile */
   .category-portals {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: 8px;
   }
 
   .category-portal-card {
-    padding: 14px 12px;
-    gap: 10px;
-    border-radius: 16px;
-    min-height: 148px;
+    padding: 12px 11px;
+    gap: 8px;
+    border-radius: 15px;
+    min-height: 126px;
     justify-content: space-between;
   }
 
   .cp-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
   }
 
   .cp-icon svg {
-    width: 17px;
-    height: 17px;
+    width: 15px;
+    height: 15px;
   }
 
   .cp-tag {
@@ -2300,14 +2321,14 @@ git-graph,
   }
 
   .cp-body {
-    min-height: 38px;
+    min-height: 34px;
     display: flex;
     align-items: center;
   }
 
   .cp-body h3 {
-    font-size: 0.96rem;
-    line-height: 1.25;
+    font-size: 0.88rem;
+    line-height: 1.2;
   }
 
   .cp-body p {
@@ -2315,13 +2336,13 @@ git-graph,
   }
 
   .cp-foot {
-    padding-top: 8px;
-    font-size: 0.68rem;
+    padding-top: 6px;
+    font-size: 0.65rem;
   }
 
   /* Camada 01: Inspetor de Categorias Clean */
   .about-left {
-    gap: 8px;
+    gap: 6px;
   }
 
   .pillar-tabs {
@@ -2334,19 +2355,19 @@ git-graph,
     padding: 6px 8px;
     gap: 6px;
     border-radius: 10px;
-    min-height: 40px;
+    min-height: 38px;
   }
 
   .pillar-tab-ic {
-    width: 24px;
-    height: 24px;
-    border-radius: 7px;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
     flex: none;
   }
 
   .pillar-tab-ic svg {
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
   }
 
   .pillar-tab-txt small {
@@ -2359,16 +2380,16 @@ git-graph,
   }
 
   .pillar-tab-txt strong {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     line-height: 1.15;
   }
 
   .pillar-inspector {
     padding: 12px 14px;
     border-radius: 16px;
-    height: clamp(320px, 46vh, 380px);
-    min-height: clamp(320px, 46vh, 380px);
-    max-height: clamp(320px, 46vh, 380px);
+    height: clamp(290px, 43dvh, 345px);
+    min-height: clamp(290px, 43dvh, 345px);
+    max-height: clamp(290px, 43dvh, 345px);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -2386,7 +2407,7 @@ git-graph,
 
   .pillar-badge {
     padding: 2px 8px;
-    font-size: 0.68rem;
+    font-size: 0.66rem;
   }
 
   .pillar-Short {
@@ -2394,14 +2415,14 @@ git-graph,
   }
 
   .pillar-card-inner h3 {
-    font-size: 1.12rem;
+    font-size: 1.08rem;
     line-height: 1.1;
     margin: 0;
   }
 
   .pillar-desc {
-    font-size: 0.76rem;
-    line-height: 1.35;
+    font-size: 0.74rem;
+    line-height: 1.32;
     margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -2410,13 +2431,13 @@ git-graph,
   }
 
   .pillar-deliverables {
-    padding: 6px 10px;
+    padding: 6px 9px;
     border-radius: 8px;
     margin: 0;
   }
 
   .pillar-sublabel {
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     margin-bottom: 3px;
   }
 
@@ -2426,7 +2447,7 @@ git-graph,
   }
 
   .pillar-deliverables li {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     line-height: 1.25;
   }
 
@@ -2440,76 +2461,128 @@ git-graph,
   }
 
   .pillar-related {
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     gap: 4px;
   }
 
   .pillar-proj-chip {
     padding: 2px 6px;
-    font-size: 0.64rem;
+    font-size: 0.62rem;
   }
 
   .pillar-foot .btn {
-    padding: 6px 12px;
-    font-size: 0.74rem;
+    padding: 5px 10px;
+    font-size: 0.72rem;
   }
 
-  /* Camada 02: Card de Projeto Clean */
+  /* Camada 02: Card de Projeto Clean & Tamanho Padronizado no Mobile */
   .feat {
-    padding: 16px;
-    border-radius: 18px;
+    padding: 13px 14px;
+    border-radius: 16px;
+    height: clamp(305px, 45dvh, 360px);
+    min-height: clamp(305px, 45dvh, 360px);
+    max-height: clamp(305px, 45dvh, 360px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .feat-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .branch-tag {
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    margin-bottom: 4px;
+    width: fit-content;
+    max-width: 100%;
   }
 
   .feat h3 {
-    font-size: 1.35rem;
+    font-size: 1.18rem;
+    line-height: 1.12;
+  }
+
+  .feat .sub {
+    font-size: 0.72rem;
+    margin-top: 2px;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .feat .desc {
-    font-size: 0.84rem;
-    line-height: 1.45;
-    margin-top: 6px;
+    font-size: 0.76rem;
+    line-height: 1.35;
+    margin-top: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .stats,
   .commits-kpis {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    padding: 8px 10px;
+    padding: 6px 8px;
     gap: 6px;
-    margin-top: 10px;
+    margin-top: 6px;
+  }
+
+  .stats dt {
+    font-size: 0.6rem;
   }
 
   .stats dd,
   .commits-kpis strong {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .stats dd.sm {
-    font-size: 0.76rem;
-    line-height: 1.2;
+    font-size: 0.7rem;
+    line-height: 1.15;
+    padding-top: 2px;
   }
 
   .inner-scroll {
-    max-height: calc(100vh - 310px);
+    max-height: clamp(305px, 45dvh, 360px);
+  }
+
+  .list-head {
+    display: none;
   }
 
   .chips {
-    margin-top: 10px;
-    gap: 5px;
+    margin-top: 6px;
+    gap: 4px;
+    max-height: 23px;
+    overflow: hidden;
   }
 
   .chips li {
-    padding: 3px 8px;
-    font-size: 0.68rem;
+    padding: 2px 7px;
+    font-size: 0.64rem;
   }
 
   .actions {
-    margin-top: 10px;
+    margin-top: 8px;
     gap: 8px;
   }
 
   .actions .btn {
-    padding: 8px 13px;
-    font-size: 0.78rem;
+    padding: 6px 12px;
+    font-size: 0.74rem;
   }
 
   .row-meta,
@@ -2523,7 +2596,7 @@ git-graph,
   }
 
   .row-btn h3 {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .row-btn .pm {
@@ -2537,73 +2610,75 @@ git-graph,
   }
 
   .more-in p {
-    font-size: 0.8rem;
+    font-size: 0.76rem;
   }
 
   /* Camada 03: Git Graph Clean */
   .commits-stage-head {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .graph-bar {
-    padding: 8px 12px;
+    padding: 7px 10px;
   }
 
   .graph-title span {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
   }
 
   .graph {
-    height: 190px;
+    height: 175px;
   }
 
   .graph-foot {
-    padding: 6px 12px;
+    padding: 5px 10px;
+    font-size: 0.7rem;
   }
 
   /* Camada 04: Stack 2x2 Clean */
   .pill {
-    padding: 6px 12px;
-    font-size: 0.8rem;
+    padding: 5px 11px;
+    font-size: 0.76rem;
   }
 
   .groups {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
-    margin-top: 10px;
+    margin-top: 8px;
   }
 
   .grp {
-    padding: 12px;
-    border-radius: 14px;
+    padding: 10px 11px;
+    border-radius: 13px;
   }
 
   .grp h3 {
-    font-size: 0.88rem;
+    font-size: 0.82rem;
     gap: 6px;
   }
 
   .grp ul {
-    margin-top: 8px;
-    gap: 3px;
-    font-size: 0.74rem;
+    margin-top: 6px;
+    gap: 2px;
+    font-size: 0.7rem;
+    line-height: 1.3;
   }
 
   /* Camada 06: Contato Clean */
   .contact-card {
-    padding: 18px 16px;
-    gap: 14px;
+    padding: 16px 14px;
+    gap: 12px;
   }
 
   .contact-card .sec-head p {
     display: block !important;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
   }
 
   .copy-row {
     width: 100%;
     justify-content: space-between;
-    font-size: 0.76rem;
+    font-size: 0.74rem;
   }
 
   .spatial-footer span:last-child {
@@ -2614,7 +2689,7 @@ git-graph,
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 14px;
-    font-size: 0.75rem;
+    padding: 9px 14px;
+    font-size: 0.74rem;
   }
 }
