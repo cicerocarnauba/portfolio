@@ -97,6 +97,16 @@ export class TimelineSection extends HTMLElement {
             </defs>
             <path class="wave-path" d="M 0 195 C 80 195, 110 82, 190 82 C 290 82, 370 308, 500 308 C 630 308, 710 82, 810 82 C 890 82, 920 195, 1000 195" />
           </svg>
+          <svg class="v-timeline-curve" viewBox="0 0 360 420" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="timelineVertGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="var(--b3)" />
+                <stop offset="50%" stop-color="var(--b2)" />
+                <stop offset="100%" stop-color="var(--b1)" />
+              </linearGradient>
+            </defs>
+            <path class="wave-path-v" d="M 38 0 C 38 25, 38 45, 38 68 C 38 135, 322 135, 322 205 C 322 275, 38 275, 38 348 C 38 380, 38 400, 38 420" />
+          </svg>
           <div class="h-timeline-track">
             ${columnsHtml}
           </div>
@@ -108,11 +118,69 @@ export class TimelineSection extends HTMLElement {
       const wrap = this.querySelector('.h-timeline-wrap');
       if (wrap) wrap.classList.add('is-animated');
     }
+
+    this.initVerticalPathSync();
+  }
+
+  initVerticalPathSync() {
+    const wrap = this.querySelector('#timelineWrap');
+    const vSvg = this.querySelector('.v-timeline-curve');
+    const vPath = this.querySelector('.wave-path-v');
+    if (!wrap || !vSvg || !vPath) return;
+
+    const updatePath = () => {
+      if (window.innerWidth > 820) return;
+      const W = wrap.offsetWidth;
+      const H = wrap.offsetHeight;
+      if (W === 0 || H === 0) return;
+
+      const milestones = Array.from(wrap.querySelectorAll('.h-milestone'));
+      if (milestones.length < 3) return;
+
+      const circleEl = milestones[0].querySelector('.m-circle');
+      const cRadius = circleEl ? circleEl.offsetWidth / 2 : 34;
+
+      const pts = milestones.map((m) => ({
+        top: m.offsetTop,
+        bottom: m.offsetTop + m.offsetHeight
+      }));
+
+      vSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+      const xLeft = Math.round(cRadius + 2);
+      const xRight = Math.round(W - cRadius - 2);
+      const g1 = Math.round((pts[0].bottom + pts[1].top) / 2);
+      const g2 = Math.round((pts[1].bottom + pts[2].top) / 2);
+      const r = 14;
+
+      const d = [
+        `M ${xLeft} 0`,
+        `L ${xLeft} ${g1 - r}`,
+        `Q ${xLeft} ${g1} ${xLeft + r} ${g1}`,
+        `L ${xRight - r} ${g1}`,
+        `Q ${xRight} ${g1} ${xRight} ${g1 + r}`,
+        `L ${xRight} ${g2 - r}`,
+        `Q ${xRight} ${g2} ${xRight - r} ${g2}`,
+        `L ${xLeft + r} ${g2}`,
+        `Q ${xLeft} ${g2} ${xLeft} ${g2 + r}`,
+        `L ${xLeft} ${H}`
+      ].join(' ');
+
+      vPath.setAttribute('d', d);
+    };
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(updatePath).observe(wrap);
+    }
+    window.addEventListener('resize', updatePath);
+    requestAnimationFrame(updatePath);
+    this._updateVerticalPath = updatePath;
   }
 
   playAnimation() {
     const wrap = this.querySelector('.h-timeline-wrap');
     if (!wrap) return;
+    if (this._updateVerticalPath) this._updateVerticalPath();
     wrap.classList.remove('is-animated');
     // Força reflow para reiniciar a animação quando o usuário mergulha na camada Formação
     void wrap.offsetWidth;

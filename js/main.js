@@ -13,7 +13,7 @@ import './components/browser-preview.js';
 import './components/poker-preview.js';
 import './components/project-list.js';
 import './components/stack-section.js';
-import './components/timeline-section.js';
+import './components/timeline-section.js?v=8';
 
 // Efeitos e Motor Espacial 3D
 import {
