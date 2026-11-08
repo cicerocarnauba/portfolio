@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Base, Reset, Tipografia & Acessibilidade
+   Base, Reset, Tipografia & Viewport Espacial (Sem Scroll Vertical)
    ========================================================================== */
 
 *, *::before, *::after {
@@ -22,36 +22,21 @@ timeline-section {
   display: block;
 }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 92px;
-}
-
+html,
 body {
   margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  overscroll-behavior: none;
   background-color: var(--bg);
-  background-image: radial-gradient(ellipse 80% 50% at 50% -10%, var(--moss-tint), transparent 70%);
+  background-image:
+    radial-gradient(ellipse 80% 55% at 50% -10%, var(--moss-tint), transparent 70%),
+    radial-gradient(circle at 85% 85%, color-mix(in srgb, var(--b3) 8%, transparent), transparent 55%);
   color: var(--fg);
-  font: 400 1.0625rem/1.65 var(--f-body);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  overflow-x: clip;
+  font: 400 1rem/1.6 var(--f-body);
   -webkit-font-smoothing: antialiased;
-}
-
-@media (min-width: 1100px) {
-  body {
-    padding-left: max(88px, env(safe-area-inset-left, 0px));
-  }
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0 0 auto;
-  height: env(safe-area-inset-top, 0px);
-  background: var(--bg);
-  z-index: 30;
 }
 
 img {
@@ -72,7 +57,7 @@ a {
 }
 
 h2 {
-  font: 700 clamp(2rem, 4.2vw, 3.2rem)/1.08 var(--f-display);
+  font: 700 clamp(1.75rem, 3.2vw, 2.65rem)/1.08 var(--f-display);
   letter-spacing: -0.025em;
 }
 
@@ -115,28 +100,28 @@ h2 {
   transform: translateY(0);
 }
 
-/* Efeitos de Scroll Reveal e Spotlight */
+/* Spotlight Radial Verde-Musgo */
 .spot {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
   opacity: 0;
   transition: opacity 0.5s;
-  background: radial-gradient(520px circle at var(--sx, 50%) var(--sy, 30%), var(--glow), transparent 70%);
+  background: radial-gradient(560px circle at var(--sx, 50%) var(--sy, 30%), var(--glow), transparent 70%);
 }
 
 .spot.on {
   opacity: 1;
 }
 
-.rv {
-  transition: transform 0.8s var(--ease-out), opacity 0.8s ease;
-}
-
-.rv.pre {
-  transform: translateY(26px);
-  opacity: 0.45;
+/* Scrollbar sutil para painéis internos quando necessário */
+.inner-scroll {
+  overflow-y: auto;
+  max-height: calc(100vh - 220px);
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -144,8 +129,4 @@ h2 {
     animation: none !important;
     transition: none !important;
   }
-  html {
-    scroll-behavior: auto;
-  }
 }
-

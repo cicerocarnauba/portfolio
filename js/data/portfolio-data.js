@@ -1,13 +1,12 @@
 /**
- * Dados centralizados do portfólio de Cícero Higor.
- * Para adicionar novos projetos, commits, tecnologias ou links de contato,
- * basta editar este arquivo.
+ * Dados centralizados do portfólio espacial de Cícero Higor.
  */
 
 export const CONTACT = {
   github: 'https://github.com/cicerocarnauba',
   email: '',
-  linkedin: ''
+  linkedin: 'https://www.linkedin.com/in/cicerocarnauba/',
+  whatsapp: 'https://wa.me/5588988626355'
 };
 
 export const TYPED_ROLES = [
@@ -18,12 +17,72 @@ export const TYPED_ROLES = [
 ];
 
 export const NAV_SECTIONS = [
-  { id: 'inicio', label: 'início', navLabel: null },
-  { id: 'sobre', label: 'sobre', navLabel: 'Sobre' },
-  { id: 'projetos', label: 'projetos', navLabel: 'Projetos' },
-  { id: 'stack', label: 'stack', navLabel: 'Stack' },
-  { id: 'formacao', label: 'formação', navLabel: 'Formação' },
-  { id: 'contato', label: 'contato', navLabel: 'Contato' }
+  { id: 'inicio', label: 'Início', short: '00', icon: 'compass' },
+  { id: 'sobre', label: 'Categorias', short: '01', icon: 'layers' },
+  { id: 'projetos', label: 'Projetos', short: '02', icon: 'git-branch' },
+  { id: 'commits', label: 'Git Log', short: '03', icon: 'git-commit' },
+  { id: 'stack', label: 'Stack', short: '04', icon: 'cpu' },
+  { id: 'formacao', label: 'Formação', short: '05', icon: 'milestone' },
+  { id: 'contato', label: 'Contato', short: '06', icon: 'send' }
+];
+
+export const ENGINEERING_PILLARS = [
+  {
+    id: 'desenvolvimento',
+    title: 'Desenvolvimento',
+    badge: 'Full Stack & Mobile',
+    colorVar: '--b1',
+    shortDesc: 'Interfaces reativas e APIs REST integradas de ponta a ponta.',
+    fullDesc: 'Construção de aplicações mobile em React Native (Expo) e sistemas web em React e Web Components, integrados a back-ends em Node.js/Express com PostgreSQL, MongoDB e SQLite.',
+    deliverables: [
+      'Telas mobile e web responsivas a partir de protótipos no Figma',
+      'APIs RESTful com autenticação JWT, hash bcrypt e validação Zod',
+      'Persistência híbrida (SQLite local + sincronização com PostgreSQL)'
+    ],
+    relatedProject: 'Medições de Obras & Fla-Quixadá'
+  },
+  {
+    id: 'arquitetura',
+    title: 'Arquitetura',
+    badge: 'Sistemas & Padrões',
+    colorVar: '--b3',
+    shortDesc: 'Modelagem desacoplada, operação offline-first e padrões GoF.',
+    fullDesc: 'Definição da estrutura técnica dos projetos para garantir manutenibilidade, funcionamento sem conexão de rede e separação clara de responsabilidades entre camadas.',
+    deliverables: [
+      'Arquitetura Offline-First com fila local e sincronização automática',
+      'Aplicação prática de Design Patterns (Strategy, Command, Observer, Factory)',
+      'Modelagem relacional com integridade referencial e containers Docker'
+    ],
+    relatedProject: 'Medições de Obras & Banco Imobiliário'
+  },
+  {
+    id: 'qualidade',
+    title: 'Garantia de Qualidade',
+    badge: 'QA & Testes',
+    colorVar: '--b2',
+    shortDesc: 'Testes unitários, validação de casos limites e prevenção de falhas.',
+    fullDesc: 'Atuação ativa na verificação das entregas da equipe, combinando testes automatizados no back-end com inspeção rigorosa de fluxos críticos e tratamento de erros.',
+    deliverables: [
+      'Testes unitários cobrindo regras de negócio e buscas no back-end',
+      'Correção de bugs críticos (fuso horário, estouro numérico, CPF e downloads)',
+      'Validação de fluxos de formulário, máscaras e adaptação de teclado mobile'
+    ],
+    relatedProject: 'Projeto Integrado III & Agenda Cultural'
+  },
+  {
+    id: 'gestao',
+    title: 'Gerência de Projetos',
+    badge: 'Processos & Git',
+    colorVar: '--b1',
+    shortDesc: 'Organização de demandas, alinhamento de equipe e histórico limpo.',
+    fullDesc: 'Acompanhamento contínuo do ciclo de vida do projeto para manter as entregas em dia, facilitar a integração entre membros do time e padronizar o versionamento.',
+    deliverables: [
+      'Divisão e acompanhamento de tarefas e prioridades junto à equipe',
+      'Padronização de histórico com Conventional Commits e revisão de PRs',
+      'Automação de checagens de repositório com GitHub Actions'
+    ],
+    relatedProject: 'Todos os projetos em equipe'
+  }
 ];
 
 export const GIT_GRAPH_BRANCHES = [
@@ -57,7 +116,7 @@ export const GIT_GRAPH_BRANCHES = [
       { d: '2026-06-21', h: '9bb0436', m: 'feat: integração de cardapio' },
       { d: '2026-06-22', h: 'e9ac65a', m: 'feat: integracao da pagina publica com a api do bolao' },
       { d: '2026-06-22', h: '142e474', m: 'style: melhora responsividade do item da loja no admin' },
-      { d: '2026-06-22', h: 'f7ac8a9', m: 'fix: correcao bug de timezone no cadastro de datas de noticias' }
+      { d: '2026-06-22', h:'f7ac8a9', m: 'fix: correcao bug de timezone no cadastro de datas de noticias' }
     ]
   },
   {
@@ -233,7 +292,7 @@ export const EDUCATION_TIMELINE = [
     institution: 'EEEP Alfredo Nunes de Melo',
     description: 'Integrado ao Ensino Médio. Primeiros fundamentos em lógica de programação, algoritmos, redes de computadores e introdução a banco de dados.',
     colorVar: '--b3',
-    position: 'top' // Círculo no topo, texto embaixo
+    position: 'top'
   },
   {
     year: '2022',
@@ -244,7 +303,7 @@ export const EDUCATION_TIMELINE = [
     institution: 'UFC · Campus Quixadá',
     description: 'Foco em UI/UX, Interação Humano-Computador, prototipação no Figma, tipografia e interfaces digitais centradas no usuário.',
     colorVar: '--b2',
-    position: 'bottom' // Texto em cima, círculo embaixo
+    position: 'bottom'
   },
   {
     year: '2024',
@@ -257,7 +316,6 @@ export const EDUCATION_TIMELINE = [
     repoUrl: 'https://github.com/cicerocarnauba/formacao_eng_de_software',
     repoLabel: 'Ver matérias no GitHub',
     colorVar: '--b1',
-    position: 'top' // Círculo no topo, texto embaixo
+    position: 'top'
   }
 ];
-

@@ -2,7 +2,7 @@
  * Componente <timeline-section>
  * Renderiza uma linha do tempo horizontal infográfica com círculos conectados
  * por uma linha fluida, alternando os nós em cima e embaixo, com animação
- * cinematográfica sequencial de surgimento ao entrar na viewport.
+ * cinematográfica sequencial de surgimento ao entrar na camada Z: -480m.
  */
 
 import { EDUCATION_TIMELINE } from '../data/portfolio-data.js';
@@ -31,7 +31,7 @@ export class TimelineSection extends HTMLElement {
         ? `<span class="m-status-pill"><span class="status-dot" aria-hidden="true"></span>${item.status}</span>`
         : '';
 
-      const delay = idx * 0.45;
+      const delay = idx * 0.4;
 
       if (item.position === 'top') {
         return `
@@ -86,8 +86,8 @@ export class TimelineSection extends HTMLElement {
     this.innerHTML = `
       <ol class="sr">${srItems}</ol>
       <div class="h-timeline-scroll">
-        <div class="h-timeline-wrap">
-          <svg class="h-timeline-curve" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
+        <div class="h-timeline-wrap" id="timelineWrap">
+          <svg class="h-timeline-curve" viewBox="0 0 1000 390" preserveAspectRatio="none" aria-hidden="true">
             <defs>
               <linearGradient id="timelineCurveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="var(--b3)" />
@@ -95,7 +95,7 @@ export class TimelineSection extends HTMLElement {
                 <stop offset="100%" stop-color="var(--b1)" />
               </linearGradient>
             </defs>
-            <path class="wave-path" d="M 0 220 C 80 220, 110 95, 190 95 C 290 95, 370 345, 500 345 C 630 345, 710 95, 810 95 C 890 95, 920 220, 1000 220" />
+            <path class="wave-path" d="M 0 195 C 80 195, 110 82, 190 82 C 290 82, 370 308, 500 308 C 630 308, 710 82, 810 82 C 890 82, 920 195, 1000 195" />
           </svg>
           <div class="h-timeline-track">
             ${columnsHtml}
@@ -104,37 +104,20 @@ export class TimelineSection extends HTMLElement {
       </div>
     `;
 
-    this.initScrollTrigger();
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const wrap = this.querySelector('.h-timeline-wrap');
+      if (wrap) wrap.classList.add('is-animated');
+    }
   }
 
-  initScrollTrigger() {
+  playAnimation() {
     const wrap = this.querySelector('.h-timeline-wrap');
     if (!wrap) return;
-
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce || !('IntersectionObserver' in window)) {
-      wrap.classList.add('is-animated');
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            wrap.classList.add('is-animated');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.25, rootMargin: '0px 0px -40px 0px' }
-    );
-
-    observer.observe(wrap);
+    wrap.classList.remove('is-animated');
+    // Força reflow para reiniciar a animação quando o usuário mergulha na camada Formação
+    void wrap.offsetWidth;
+    wrap.classList.add('is-animated');
   }
 }
 
 customElements.define('timeline-section', TimelineSection);
-
-
-
-
