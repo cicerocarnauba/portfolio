@@ -94,7 +94,13 @@ export class GitGraph extends HTMLElement {
     let cols = {};
     let visible = true;
     let running = false;
-    const T0 = performance.now();
+    let T0 = performance.now();
+
+    this.replayGraph = () => {
+      T0 = performance.now();
+      layout();
+      start();
+    };
 
     // Popula lista acessível para leitores de tela
     GIT_GRAPH_BRANCHES.forEach((branch) => {
@@ -152,7 +158,7 @@ export class GitGraph extends HTMLElement {
       if (frameN % 40 === 1 || !cols.bg) readCols();
 
       ctx.clearRect(0, 0, W, H);
-      const p = reduce ? 1 : easeOutCubic(clamp((t - 0.25) / 2.6, 0, 1));
+      const p = reduce ? 1 : easeOutCubic(clamp((t - 0.1) / 1.35, 0, 1));
       const ty = H * 0.5;
 
       ctx.save();
@@ -252,9 +258,10 @@ export class GitGraph extends HTMLElement {
     };
 
     const layout = () => {
-      const r = box.getBoundingClientRect();
-      W = r.width;
-      H = r.height;
+      const W_raw = box.offsetWidth || this.offsetWidth || 1100;
+      const H_raw = box.offsetHeight || 290;
+      W = W_raw;
+      H = H_raw;
       const dpr = Math.min(2, window.devicePixelRatio || 1);
       cv.width = Math.round(W * dpr);
       cv.height = Math.round(H * dpr);

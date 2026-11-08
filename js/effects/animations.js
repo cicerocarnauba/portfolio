@@ -1,10 +1,10 @@
 /**
- * Módulo de Animações e Microinterações.
- * Reúne animações de entrada, máquina de escrever, scroll reveal,
- * contadores numéricos, inclinação 3D (tilt), botões magnéticos e spotlight.
+ * Módulo de Animações, Motor Espacial 3D (Z-Axis Dive-In) e Microinterações.
+ * Gerencia a navegação por camadas de profundidade sem rolagem vertical,
+ * o inspetor interativo de Pilares de Engenharia e o deck de projetos.
  */
 
-import { TYPED_ROLES, NAV_SECTIONS } from '../data/portfolio-data.js';
+import { TYPED_ROLES, NAV_SECTIONS, ENGINEERING_PILLARS } from '../data/portfolio-data.js';
 
 export const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -47,7 +47,7 @@ export function initHeroNameSplit(selector = '#name') {
 }
 
 /**
- * Efeito de digitação alternando os papéis do desenvolvedor no Hero.
+ * Efeito de digitação alternando as frentes de Engenharia de Software no Hero.
  */
 export function initTypedRole(selector = '#typed') {
   if (prefersReducedMotion()) return;
@@ -86,68 +86,410 @@ export function initTypedRole(selector = '#typed') {
 }
 
 /**
- * Revela suavemente os elementos `.rv` conforme entram na viewport.
+ * Anima contadores numéricos dentro de um container específico.
  */
-export function initScrollReveal() {
-  if (prefersReducedMotion() || !('IntersectionObserver' in window)) return;
+export function runCountersInContainer(container) {
+  if (!container) return;
+  const counters = container.querySelectorAll('[data-count]');
+  counters.forEach((el) => {
+    if (el.dataset.counted === 'true') return;
+    el.dataset.counted = 'true';
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.remove('pre');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
-
-  document.querySelectorAll('.rv').forEach((el) => {
-    if (el.getBoundingClientRect().top > window.innerHeight * 0.92) {
-      el.classList.add('pre');
-      observer.observe(el);
+    const targetValue = Number(el.getAttribute('data-count'));
+    if (prefersReducedMotion()) {
+      el.textContent = String(targetValue);
+      return;
     }
+
+    const startTime = performance.now();
+    function step(now) {
+      const progress = Math.min(1, (now - startTime) / 950);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = String(Math.round(targetValue * eased));
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
   });
 }
 
 /**
- * Anima os contadores numéricos (`[data-count]`) quando ficam visíveis.
+ * Inspetor Interativo dos 4 Pilares de Engenharia de Software (Camada 01 · #sobre).
  */
-export function initStatCounters() {
-  if (prefersReducedMotion() || !('IntersectionObserver' in window)) return;
+export function initEngineeringInspector() {
+  const tabsContainer = document.querySelector('#pillarTabs');
+  const detailContainer = document.querySelector('#pillarDetail');
+  if (!tabsContainer || !detailContainer) return null;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        observer.unobserve(entry.target);
+  const getPillarIcon = (id) => {
+    switch (id) {
+      case 'desenvolvimento':
+        return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`;
+      case 'arquitetura':
+        return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`;
+      case 'qualidade':
+        return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>`;
+      case 'gestao':
+        return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>`;
+      default:
+        return '';
+    }
+  };
 
-        const el = entry.target;
-        const targetValue = Number(el.getAttribute('data-count'));
-        const startTime = performance.now();
+  // Renderiza os botões de seleção dos 4 pilares
+  tabsContainer.innerHTML = ENGINEERING_PILLARS.map(
+    (p, idx) => `
+      <button type="button" class="pillar-tab ${idx === 0 ? 'is-active' : ''}" data-pillar-id="${p.id}" style="--c:var(${p.colorVar})" role="tab" aria-selected="${idx === 0 ? 'true' : 'false'}">
+        <span class="pillar-tab-ic" aria-hidden="true">${getPillarIcon(p.id)}</span>
+        <span class="pillar-tab-txt">
+          <small class="mono">ENG-0${idx + 1} · ${p.badge}</small>
+          <strong>${p.title}</strong>
+        </span>
+      </button>
+    `
+  ).join('');
 
-        function step(now) {
-          const progress = Math.min(1, (now - startTime) / 1100);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = String(Math.round(targetValue * eased));
-          if (progress < 1) {
-            requestAnimationFrame(step);
-          }
+  const renderDetail = (pillarId) => {
+    const idx = Math.max(0, ENGINEERING_PILLARS.findIndex((p) => p.id === pillarId));
+    const pillar = ENGINEERING_PILLARS[idx] || ENGINEERING_PILLARS[0];
+    if (!pillar) return;
+
+    tabsContainer.querySelectorAll('.pillar-tab').forEach((btn) => {
+      const active = btn.getAttribute('data-pillar-id') === pillar.id;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    const relatedList = Array.isArray(pillar.relatedProjects)
+      ? pillar.relatedProjects
+      : [pillar.relatedProject].filter(Boolean);
+
+    detailContainer.style.setProperty('--c', `var(${pillar.colorVar})`);
+    detailContainer.innerHTML = `
+      <div class="pillar-card-inner">
+        <div class="pillar-card-head">
+          <span class="pillar-badge mono">ENG-0${idx + 1} · ${pillar.badge}</span>
+          <span class="pillar-Short mono">${pillar.shortDesc}</span>
+        </div>
+        <h3>${pillar.title}</h3>
+        <p class="pillar-desc">${pillar.fullDesc || pillar.description}</p>
+        <div class="pillar-deliverables">
+          <span class="pillar-sublabel mono">Entregas &amp; Práticas Aplicadas</span>
+          <ul>
+            ${pillar.deliverables.map((d) => `<li>${d}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="pillar-foot">
+          <div class="pillar-related">
+            <span class="mono">Aplicado em:</span>
+            ${relatedList.map((rp) => `<span class="pillar-proj-chip">${rp}</span>`).join('')}
+          </div>
+          <button type="button" class="btn ghost sm-btn" data-layer-target="2">
+            <span>Inspecionar Projetos</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    `;
+  };
+
+  renderDetail(ENGINEERING_PILLARS[0].id);
+
+  tabsContainer.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-pillar-id]');
+    if (!btn) return;
+    renderDetail(btn.getAttribute('data-pillar-id'));
+  });
+
+  return { selectPillar: renderDetail };
+}
+
+/**
+ * Deck Espacial de Projetos (Camada 02 · #projetos) para caber em 100vh sem scroll de página.
+ */
+export function initProjectDeck() {
+  const deckBtns = Array.from(document.querySelectorAll('[data-proj-tab]'));
+  const deckPanes = Array.from(document.querySelectorAll('[data-proj-pane]'));
+  if (!deckBtns.length || !deckPanes.length) return;
+
+  const activateTab = (tabKey) => {
+    deckBtns.forEach((btn) => {
+      const isMatch = btn.getAttribute('data-proj-tab') === tabKey;
+      btn.classList.toggle('is-active', isMatch);
+      btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+    });
+
+    deckPanes.forEach((pane) => {
+      const isMatch = pane.getAttribute('data-proj-pane') === tabKey;
+      pane.classList.toggle('is-active', isMatch);
+      pane.hidden = !isMatch;
+      if (isMatch) {
+        runCountersInContainer(pane);
+      }
+    });
+  };
+
+  deckBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activateTab(btn.getAttribute('data-proj-tab'));
+    });
+  });
+}
+
+/**
+ * Motor Espacial 3D no Eixo Z (Dive-In Engine) + Sincronização com Liquid Glass Dock.
+ */
+export function initSpatialEngine(inspectorController = null) {
+  const viewport = document.querySelector('#spatialViewport');
+  const layers = Array.from(document.querySelectorAll('.spatial-layer'));
+  const dock = document.querySelector('#rail');
+  const dockPill = document.querySelector('#dockPill');
+  const dockFill = document.querySelector('#dockFill');
+  const dockCoord = document.querySelector('#dockCoord');
+  const hudLayerName = document.querySelector('#hudLayerName');
+  const prevBtn = document.querySelector('#prevLayerBtn');
+  const nextBtn = document.querySelector('#nextLayerBtn');
+
+  if (!layers.length) return;
+
+  let currentLayer = 0;
+  let isTransitioning = false;
+  let diveTimer = null;
+
+  const updateDockUI = (index) => {
+    const sectionMeta = NAV_SECTIONS[index] || NAV_SECTIONS[0];
+
+    if (dock) {
+      const items = Array.from(dock.querySelectorAll('.lg-dock-btn'));
+      items.forEach((item, idx) => {
+        const active = idx === index;
+        item.classList.toggle('on', active);
+        item.setAttribute('aria-current', active ? 'step' : 'false');
+        if (active && dockPill) {
+          dockPill.style.transform = `translate3d(${item.offsetLeft}px, ${item.offsetTop}px, 0)`;
         }
-
-        requestAnimationFrame(step);
       });
-    },
-    { threshold: 0.6 }
-  );
+    }
 
-  document.querySelectorAll('[data-count]').forEach((el) => {
-    if (el.getBoundingClientRect().top > window.innerHeight) {
-      el.textContent = '0';
-      observer.observe(el);
+    if (dockFill) {
+      const progress = layers.length > 1 ? (index / (layers.length - 1)) * 100 : 0;
+      dockFill.style.height = `${progress}%`;
+    }
+
+    if (hudLayerName && sectionMeta) {
+      const num = String(index).padStart(2, '0');
+      hudLayerName.textContent = `${num} · ${sectionMeta.label.toUpperCase()}`;
+    }
+
+    if (prevBtn) prevBtn.disabled = index <= 0;
+    if (nextBtn) nextBtn.disabled = index >= layers.length - 1;
+  };
+
+  const goToLayer = (targetIndex, options = {}) => {
+    const clamped = Math.max(0, Math.min(layers.length - 1, targetIndex));
+    if (clamped === currentLayer && !options.force && !options.pillarId) return;
+
+    const direction = clamped > currentLayer ? 'dive' : 'surface';
+    currentLayer = clamped;
+
+    if (!prefersReducedMotion()) {
+      isTransitioning = true;
+      setTimeout(() => {
+        isTransitioning = false;
+      }, 720);
+    }
+
+    if (viewport && !options.force) {
+      viewport.classList.remove('is-diving', 'is-surfacing');
+      void viewport.offsetWidth;
+      viewport.classList.add(direction === 'dive' ? 'is-diving' : 'is-surfacing');
+      clearTimeout(diveTimer);
+      diveTimer = setTimeout(() => {
+        viewport.classList.remove('is-diving', 'is-surfacing');
+      }, 820);
+    }
+
+    layers.forEach((layer, idx) => {
+      layer.classList.remove('is-active', 'is-past', 'is-next', 'is-deep');
+
+      if (idx === currentLayer) {
+        layer.classList.add('is-active');
+        layer.setAttribute('aria-hidden', 'false');
+        layer.removeAttribute('inert');
+      } else if (idx < currentLayer) {
+        layer.classList.add('is-past');
+        layer.setAttribute('aria-hidden', 'true');
+        layer.setAttribute('inert', '');
+      } else if (idx === currentLayer + 1) {
+        layer.classList.add('is-next');
+        layer.setAttribute('aria-hidden', 'true');
+        layer.setAttribute('inert', '');
+      } else {
+        layer.classList.add('is-deep');
+        layer.setAttribute('aria-hidden', 'true');
+        layer.setAttribute('inert', '');
+      }
+    });
+
+    updateDockUI(currentLayer);
+
+    // Gatilhos específicos de cada camada ao entrar em foco
+    const activeLayerEl = layers[currentLayer];
+    if (activeLayerEl) {
+      activeLayerEl.scrollTop = 0;
+    }
+    runCountersInContainer(activeLayerEl);
+
+    if (options.pillarId && inspectorController) {
+      inspectorController.selectPillar(options.pillarId);
+    }
+
+    if (activeLayerEl && activeLayerEl.id === 'commits') {
+      const graphComp = activeLayerEl.querySelector('git-graph');
+      if (graphComp && typeof graphComp.replayGraph === 'function') {
+        graphComp.replayGraph();
+      }
+    }
+
+    if (activeLayerEl && activeLayerEl.id === 'formacao') {
+      const timelineComp = activeLayerEl.querySelector('timeline-section');
+      if (timelineComp && typeof timelineComp.playAnimation === 'function') {
+        timelineComp.playAnimation();
+      }
+    }
+
+    // Atualiza hash na URL de forma silenciosa
+    if (activeLayerEl && activeLayerEl.id && history.replaceState) {
+      history.replaceState(null, '', `#${activeLayerEl.id}`);
+    }
+  };
+
+  // Clique em qualquer elemento com [data-layer-target]
+  document.addEventListener('click', (e) => {
+    const pillarTrigger = e.target.closest('[data-pillar-dive]');
+    if (pillarTrigger) {
+      e.preventDefault();
+      const pillarId = pillarTrigger.getAttribute('data-pillar-dive');
+      goToLayer(1, { pillarId });
+      return;
+    }
+
+    const layerTrigger = e.target.closest('[data-layer-target]');
+    if (layerTrigger) {
+      e.preventDefault();
+      const targetIdx = Number(layerTrigger.getAttribute('data-layer-target'));
+      if (!Number.isNaN(targetIdx)) {
+        goToLayer(targetIdx);
+      }
     }
   });
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => goToLayer(currentLayer - 1));
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => goToLayer(currentLayer + 1));
+  }
+
+  // Navegação por Roda do Mouse (Wheel) -> Mergulho no eixo Z
+  let wheelAccumulator = 0;
+  let wheelResetTimer = null;
+
+  window.addEventListener(
+    'wheel',
+    (e) => {
+      // Permite scroll interno caso o usuário esteja dentro de uma caixa com overflow-y/x ativo
+      const scrollable = e.target.closest('.inner-scroll, .h-timeline-scroll, .spatial-layer.is-active');
+      if (scrollable) {
+        const canScrollDown =
+          e.deltaY > 0 && scrollable.scrollTop + scrollable.clientHeight < scrollable.scrollHeight - 4;
+        const canScrollUp = e.deltaY < 0 && scrollable.scrollTop > 4;
+        if (canScrollDown || canScrollUp) return;
+      }
+
+      e.preventDefault();
+      if (isTransitioning) return;
+
+      wheelAccumulator += e.deltaY;
+      clearTimeout(wheelResetTimer);
+      wheelResetTimer = setTimeout(() => {
+        wheelAccumulator = 0;
+      }, 180);
+
+      if (Math.abs(wheelAccumulator) >= 42) {
+        const dir = wheelAccumulator > 0 ? 1 : -1;
+        wheelAccumulator = 0;
+        goToLayer(currentLayer + dir);
+      }
+    },
+    { passive: false }
+  );
+
+  // Gestos de Toque (Swipe direto entre camadas no Mobile, sem scroll vertical)
+  let touchStartY = 0;
+  let touchStartX = 0;
+
+  window.addEventListener(
+    'touchstart',
+    (e) => {
+      if (e.touches.length !== 1) return;
+      touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    'touchend',
+    (e) => {
+      if (isTransitioning || !e.changedTouches.length) return;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      const dx = touchStartX - e.changedTouches[0].clientX;
+
+      // Ignora gestos predominantemente horizontais (ex: abas)
+      if (Math.abs(dx) > Math.abs(dy)) return;
+
+      if (dy > 42) {
+        goToLayer(currentLayer + 1);
+      } else if (dy < -42) {
+        goToLayer(currentLayer - 1);
+      }
+    },
+    { passive: true }
+  );
+
+  // Navegação por Teclado (Setas, PageDown/PageUp, Home/End)
+  window.addEventListener('keydown', (e) => {
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+    if (isTransitioning) return;
+
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+      e.preventDefault();
+      goToLayer(currentLayer + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      goToLayer(currentLayer - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      goToLayer(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      goToLayer(layers.length - 1);
+    }
+  });
+
+  window.addEventListener('resize', () => updateDockUI(currentLayer));
+
+  // Inicializa na camada correspondente ao hash atual (ou camada 0)
+  const initialHash = window.location.hash.replace('#', '');
+  const initialIndex = Math.max(
+    0,
+    NAV_SECTIONS.findIndex((s) => s.id === initialHash)
+  );
+  goToLayer(initialIndex, { force: true });
 }
 
 /**
@@ -156,14 +498,13 @@ export function initStatCounters() {
 export function initPointerEffects() {
   if (!hasFinePointer() || prefersReducedMotion()) return;
 
-  // Tilt 3D nos cards visuais dos projetos principais
   document.querySelectorAll('.tilt').forEach((el) => {
     el.addEventListener('pointermove', (e) => {
       const rect = el.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      el.style.setProperty('--ry', `${x * 7}deg`);
-      el.style.setProperty('--rx', `${-y * 7}deg`);
+      el.style.setProperty('--ry', `${x * 6}deg`);
+      el.style.setProperty('--rx', `${-y * 6}deg`);
       el.style.setProperty('--gx', `${(x + 0.5) * 100}%`);
       el.style.setProperty('--gy', `${(y + 0.5) * 100}%`);
     });
@@ -174,12 +515,11 @@ export function initPointerEffects() {
     });
   });
 
-  // Botões com atração magnética sutil
   document.querySelectorAll('.mag').forEach((btn) => {
     btn.addEventListener('pointermove', (e) => {
       const rect = btn.getBoundingClientRect();
-      const dx = (e.clientX - rect.left - rect.width / 2) * 0.16;
-      const dy = (e.clientY - rect.top - rect.height / 2) * 0.24;
+      const dx = (e.clientX - rect.left - rect.width / 2) * 0.14;
+      const dy = (e.clientY - rect.top - rect.height / 2) * 0.2;
       btn.style.transform = `translate(${dx}px, ${dy}px)`;
     });
 
@@ -188,7 +528,6 @@ export function initPointerEffects() {
     });
   });
 
-  // Spotlight radial verde-musgo que acompanha o cursor
   const spot = document.querySelector('#spot');
   if (spot) {
     window.addEventListener(
@@ -202,44 +541,3 @@ export function initPointerEffects() {
     );
   }
 }
-
-/**
- * Sincroniza a barra de progresso de leitura no Header, no Side Rail e destaca a seção ativa.
- */
-export function initScrollProgressSync() {
-  const rail = document.querySelector('#rail');
-  const top = document.querySelector('#top');
-  if (!rail || !top) return;
-
-  const dots = Array.from(rail.querySelectorAll('a'));
-  const navLinks = Array.from(top.querySelectorAll('.nav a'));
-  const sections = NAV_SECTIONS.map((s) => document.getElementById(s.id));
-
-  function onScrollOrResize() {
-    const doc = document.documentElement;
-    const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
-    const progress = Math.min(1, Math.max(0, doc.scrollTop / maxScroll));
-
-    rail.style.setProperty('--p', progress);
-    top.style.setProperty('--p', progress);
-
-    let currentIdx = 0;
-    sections.forEach((sec, idx) => {
-      if (sec && sec.getBoundingClientRect().top < window.innerHeight * 0.42) {
-        currentIdx = idx;
-      }
-    });
-
-    dots.forEach((dot, idx) => dot.classList.toggle('on', idx === currentIdx));
-
-    const activeId = sections[currentIdx] ? sections[currentIdx].id : '';
-    navLinks.forEach((link) => {
-      link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
-    });
-  }
-
-  window.addEventListener('scroll', onScrollOrResize, { passive: true });
-  window.addEventListener('resize', onScrollOrResize);
-  onScrollOrResize();
-}
-
