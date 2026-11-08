@@ -1158,7 +1158,195 @@ git-graph,
   from { transform: translateX(-8px); opacity: 0; }
 }
 
-/* Componente <project-list> (Aba 03 do Deck) */
+/* Componente <poker-preview> */
+.poker-board {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+}
+
+.p-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-2);
+  font-size: 0.74rem;
+}
+
+.p-room-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--b3);
+}
+
+.p-timer-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--b1) 15%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--b1) 35%, var(--line));
+  font-size: 0.7rem;
+  color: var(--b1);
+}
+
+.p-screen {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.p-story {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.p-story-label {
+  font-size: 0.66rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.p-story h4 {
+  font: 600 0.92rem var(--f-display);
+  color: var(--fg);
+  line-height: 1.25;
+}
+
+.p-consensus-bar {
+  min-height: 24px;
+}
+
+.p-consensus-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--b3) 14%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--b3) 35%, var(--line));
+  color: var(--b3);
+  font-size: 0.68rem;
+}
+
+.p-consensus-pill.is-diff {
+  background: color-mix(in srgb, var(--b2) 14%, var(--bg));
+  border-color: color-mix(in srgb, var(--b2) 35%, var(--line));
+  color: var(--b2);
+}
+
+.p-players {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.p-player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 4px;
+  border-radius: 9px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.p-player-card.is-you {
+  border-color: var(--b3);
+  background: color-mix(in srgb, var(--b3) 12%, var(--bg-2));
+}
+
+.p-card-val {
+  width: 32px;
+  height: 44px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font: 700 1.05rem var(--f-mono);
+  background: var(--surface-2);
+  border: 1px solid var(--line-strong);
+  color: var(--fg);
+  box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.3);
+}
+
+.p-player-card.is-you .p-card-val {
+  background: var(--b3);
+  color: #0b1a10;
+  border-color: var(--b3);
+}
+
+@keyframes card-pop {
+  0% { transform: scale(0.7) rotate(-4deg); opacity: 0.6; }
+  60% { transform: scale(1.15) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.p-player-name {
+  font-size: 0.65rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.p-deck-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+}
+
+.p-deck-label {
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.p-deck {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.p-deck-card {
+  flex: 1;
+  height: 32px;
+  border-radius: 5px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-2);
+  color: var(--fg);
+  font: 600 0.78rem var(--f-mono);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.p-deck-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--b3);
+}
+
+.p-deck-card.is-selected {
+  background: var(--b3);
+  color: #0b1a10;
+  border-color: var(--b3);
+  transform: translateY(-3px);
+}
+
+/* Componente <project-list> (Aba do Deck) */
 .list-head {
   display: flex;
   flex-wrap: wrap;
@@ -1759,6 +1947,7 @@ git-graph,
   .feat .role-line,
   .feat offline-diagram,
   .feat browser-preview,
+  .feat poker-preview,
   .marq.rev,
   .graph-foot span:first-child {
     display: none !important;
@@ -1901,7 +2090,7 @@ git-graph,
 
   .proj-deck-tabs {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 6px;
     width: 100%;
     overflow: visible;
@@ -2292,6 +2481,15 @@ git-graph,
   .stats dd,
   .commits-kpis strong {
     font-size: 1.1rem;
+  }
+
+  .stats dd.sm {
+    font-size: 0.76rem;
+    line-height: 1.2;
+  }
+
+  .inner-scroll {
+    max-height: calc(100vh - 310px);
   }
 
   .chips {

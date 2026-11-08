@@ -3,13 +3,14 @@
  * Registra os Web Components, renderiza os links de contato e inicializa o Motor 3D Z-Axis.
  */
 
-import { CONTACT } from './data/portfolio-data.js?v=4';
+import { CONTACT } from './data/portfolio-data.js?v=5';
 
 // Registro dos Web Components
 import './components/app-header.js';
 import './components/git-graph.js';
 import './components/offline-diagram.js';
 import './components/browser-preview.js';
+import './components/poker-preview.js';
 import './components/project-list.js';
 import './components/stack-section.js';
 import './components/timeline-section.js';

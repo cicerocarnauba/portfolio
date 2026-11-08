@@ -39,7 +39,7 @@ export const ENGINEERING_PILLARS = [
       'APIs RESTful com autenticação JWT, hash bcrypt e validação Zod',
       'Persistência híbrida (SQLite local + sincronização com PostgreSQL)'
     ],
-    relatedProject: 'Medições de Obras & Fla-Quixadá'
+    relatedProject: 'Medições de Obras, Fla-Quixadá & Planning Poker'
   },
   {
     id: 'arquitetura',
@@ -78,10 +78,10 @@ export const ENGINEERING_PILLARS = [
     fullDesc: 'Acompanhamento contínuo do ciclo de vida do projeto para manter as entregas em dia, facilitar a integração entre membros do time e padronizar o versionamento.',
     deliverables: [
       'Divisão e acompanhamento de tarefas e prioridades junto à equipe',
-      'Padronização de histórico com Conventional Commits e revisão de PRs',
+      'Sessões de Planning Poker e refinamento de histórias de usuário Scrum',
       'Automação de checagens de repositório com GitHub Actions'
     ],
-    relatedProject: 'Todos os projetos em equipe'
+    relatedProject: 'Planning Poker Scrum & Projetos em equipe'
   }
 ];
 
@@ -179,12 +179,22 @@ export const FLA_QUIXADA_MODULES = [
 
 export const EXTRA_PROJECTS = [
   {
+    title: 'Planning Poker Scrum',
+    summary: 'Salas colaborativas com WebSockets e gestão de histórias de usuário',
+    meta: 'Node.js · Socket.io · SQLite',
+    colorVar: '--b3',
+    defaultOpen: true,
+    description: 'Aplicação web colaborativa para times Scrum realizarem sessões de Planning Poker e refinamento de histórias de usuário em tempo real, sem necessidade de autenticação por senha. Implementa sequência de Fibonacci, detecção automática de consenso (média e moda), timer de discussão sincronizado e interface mobile-first.',
+    chips: ['Node.js', 'Express', 'Socket.io', 'SQLite', 'WebSockets', 'Scrum', 'Mobile-First'],
+    repoUrl: 'https://github.com/cicerocarnauba/planing-poker'
+  },
+  {
     title: 'Agenda Cultural',
     summary: 'Gestão de eventos culturais com controle de permissões e relatórios em PDF',
     meta: 'Python · PostgreSQL',
-    colorVar: '--b3',
-    defaultOpen: true,
-    description: 'Sistema web para gestão de eventos e espaços culturais com quatro níveis de permissão (visitante, comum, gerente e admin), dashboard mensal e geração de relatórios de inscritos em PDF. Contribuí com 24 commits entre dez 2025 e jan 2026: controle de acesso por perfil, modelagem das tabelas, dashboard e validação de CPF.',
+    colorVar: '--b1',
+    defaultOpen: false,
+    description: 'Sistema web para gestão de eventos e espaços culturais com quatro níveis de permissão (visitante, comum, gerente e admin), dashboard mensal e geração de relatórios de inscritos em PDF. Atuação direta no controle de acesso por perfil (RBAC), modelagem das tabelas relacionais, desenvolvimento do dashboard e validação de CPF.',
     chips: ['Python', 'Panel', 'PostgreSQL', 'SQLAlchemy'],
     repoUrl: 'https://github.com/cicerocarnauba/Agenda_Cultural'
   },
@@ -192,9 +202,9 @@ export const EXTRA_PROJECTS = [
     title: 'Biblioteca escolar para desktop',
     summary: 'Aplicação desktop offline para controle de acervo e empréstimos',
     meta: 'Next.js · Electron',
-    colorVar: '--b1',
+    colorVar: '--b2',
     defaultOpen: false,
-    description: 'Aplicação desktop instalável desenvolvida para a Creche Maria de Lourdes, em Piquet Carneiro (CE), substituindo o controle manual em papel. Opera sem dependência de internet com banco SQLite local, ambiente padronizado em Docker e validação automatizada de Conventional Commits via GitHub Actions.',
+    description: 'Aplicação desktop instalável desenvolvida para a Creche Maria de Lourdes, em Piquet Carneiro (CE), substituindo o controle manual em papel. Opera sem dependência de internet com banco SQLite local, ambiente padronizado em Docker e automação de checagens via GitHub Actions.',
     chips: ['Next.js', 'Electron', 'Tailwind CSS', 'SQLite', 'Docker', 'GitHub Actions'],
     repoUrl: 'https://github.com/cicerocarnauba/projeto-integrado-1'
   },
