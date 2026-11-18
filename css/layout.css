@@ -1,698 +1,517 @@
 /* ==========================================================================
-   Layout Espacial 3D (Z-Axis Camera) & Liquid Glass Navigation
+   Layout Editorial — Cabeçalho Fixo, Fólio de Abertura, Faixas & Rodapé
    ========================================================================== */
 
-/* Túnel de Profundidade no Eixo Z */
-.depth-tunnel {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-
-.depth-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px dashed color-mix(in srgb, var(--line-strong) 45%, transparent);
-  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.85s ease;
-  opacity: 0.28;
-}
-
-.depth-ring.r1 {
-  width: 48vw;
-  height: 48vw;
-}
-
-.depth-ring.r2 {
-  width: 78vw;
-  height: 78vw;
-  border-style: solid;
-  border-color: color-mix(in srgb, var(--line) 55%, transparent);
-}
-
-.depth-ring.r3 {
-  width: 112vw;
-  height: 112vw;
-}
-
-body:has(#spatialViewport.is-diving) .depth-ring.r1 {
-  transform: scale(1.28);
-  opacity: 0.55;
-}
-body:has(#spatialViewport.is-diving) .depth-ring.r2 {
-  transform: scale(1.18);
-  opacity: 0.45;
-}
-body:has(#spatialViewport.is-surfacing) .depth-ring.r1 {
-  transform: scale(0.82);
-  opacity: 0.45;
-}
-
-/* ==========================================================================
-   HUD Superior Flutuante em Liquid Glass (<app-header>)
-   ========================================================================== */
-app-header {
-  position: fixed;
-  top: 14px;
-  left: 102px;
-  right: 28px;
-  z-index: 30;
-  pointer-events: none;
-}
-
-.top-hud {
-  max-width: 1220px;
+.wrap {
+  width: 100%;
+  max-width: 1320px;
   margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 56px);
+}
+
+/* Cabeçalho Superior (<app-header>) */
+app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-header {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 56px);
+  min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 7px 12px 7px 18px;
-  border-radius: var(--r-pill);
-  pointer-events: auto;
-  /* Liquid Glass Surface */
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.02) 100%),
-    var(--glass-bg);
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
-  border: 1px solid color-mix(in srgb, var(--fg) 14%, var(--line));
-  box-shadow: var(--glass-shadow);
+  gap: 20px;
 }
 
-.brand {
+.brand-mark {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   text-decoration: none;
-  font: 700 0.98rem var(--f-display);
-  letter-spacing: -0.015em;
+  font: 700 1.06rem/1.1 var(--f-display);
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  min-height: 44px;
   white-space: nowrap;
 }
 
-.brand svg {
+.cta-short {
+  display: none;
+}
+
+.brand-mark svg {
   width: 20px;
   height: 20px;
   flex: none;
-}
-
-.brand-branch {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 2px 9px;
-  border-radius: var(--r-pill);
-  background: var(--moss-pill);
-  border: 1px solid var(--line-strong);
-  font: 500 0.72rem var(--f-mono);
   color: var(--b1);
 }
 
-.hud-telemetry {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 5px 14px;
-  border-radius: var(--r-pill);
-  background: color-mix(in srgb, var(--bg) 55%, transparent);
-  border: 1px solid var(--line);
-  font: 500 0.75rem var(--f-mono);
-}
-
-.hud-layer-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--fg);
-  font-weight: 600;
-}
-
-.hud-pulse {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--b1);
-  box-shadow: 0 0 8px var(--b1);
-}
-
-.hud-hint {
+.brand-loc {
+  font: 500 0.85rem var(--f-body);
   color: var(--muted);
-  font-size: 0.72rem;
-  padding-left: 10px;
-  border-left: 1px solid var(--line);
 }
 
-.hud-actions {
+.site-nav {
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.hud-contact-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  height: 34px;
-  padding: 0 14px;
-  border-radius: var(--r-pill);
-  border: 1px solid color-mix(in srgb, var(--b1) 50%, var(--line-strong));
-  background: color-mix(in srgb, var(--b1) 16%, var(--surface));
-  color: var(--fg);
-  font: 600 0.82rem var(--f-body);
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
-}
-
-.hud-contact-btn:hover {
-  background: var(--b1);
-  border-color: var(--b1);
-  color: var(--ink);
-  transform: translateY(-1px);
-}
-
-.hud-contact-btn svg {
-  width: 14px;
-  height: 14px;
-}
-
-.hud-step-btn {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--bg-2);
-  color: var(--fg);
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s, opacity 0.2s;
-}
-
-.hud-step-btn:hover:not(:disabled) {
-  background: var(--moss-pill);
-  border-color: var(--b1);
-  color: var(--b1);
-}
-
-.hud-step-btn:disabled {
-  opacity: 0.32;
-  cursor: not-allowed;
-}
-
-.hud-step-btn svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* ==========================================================================
-   Menu Lateral em Liquid Glass (<side-rail> -> .liquid-dock)
-   ========================================================================== */
-.liquid-dock {
-  position: fixed;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 35;
-}
-
-.liquid-dock-glass {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 10px;
-  border-radius: 28px;
-  /* Verdadeiro efeito Liquid Glass com refração especular */
-  background:
-    linear-gradient(155deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 45%, rgba(88, 196, 150, 0.07) 100%),
-    var(--dock-bg);
-  backdrop-filter: blur(26px) saturate(190%);
-  -webkit-backdrop-filter: blur(26px) saturate(190%);
-  border: 1px solid color-mix(in srgb, var(--fg) 18%, var(--line));
-  box-shadow: var(--dock-shadow);
-}
-
-.liquid-dock-items {
-  position: relative;
-  display: flex;
-  flex-direction: column;
   gap: 6px;
 }
 
-.liquid-active-pill {
-  position: absolute;
-  top: 12px;
-  left: 10px;
-  width: 42px;
-  height: 42px;
-  border-radius: 15px;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--b1) 34%, rgba(255, 255, 255, 0.22)), color-mix(in srgb, var(--b3) 20%, transparent));
-  border: 1px solid color-mix(in srgb, var(--b1) 65%, rgba(255, 255, 255, 0.35));
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.4),
-    0 6px 18px -4px color-mix(in srgb, var(--b1) 55%, transparent);
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-  z-index: 0;
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  text-decoration: none;
+  font: 600 0.92rem var(--f-body);
+  color: var(--fg);
+  position: relative;
+  transition: color 0.2s var(--ease-out);
 }
 
-.lg-dock-btn {
-  position: relative;
-  z-index: 1;
-  width: 42px;
-  height: 42px;
-  padding: 0;
-  border-radius: 15px;
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  display: grid;
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 8px;
+  height: 1.5px;
+  background: var(--b1);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.24s var(--ease-out);
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="true"] {
+  color: var(--b1);
+}
+
+.site-nav a:hover::after,
+.site-nav a[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-btn,
+.menu-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--rule-soft);
+  background: var(--surface);
+  color: var(--fg);
+  display: inline-grid;
   place-items: center;
   cursor: pointer;
-  transition: color 0.25s, transform 0.25s;
+  transition: border-color 0.2s var(--ease-out), background 0.2s var(--ease-out), transform 0.15s var(--ease-out);
 }
 
-.lg-dock-btn:hover {
-  color: var(--fg);
-  transform: scale(1.07);
+.theme-btn:hover,
+.menu-toggle:hover {
+  border-color: var(--rule);
+  background: var(--surface-hover);
 }
 
-.lg-dock-btn.on {
-  color: var(--fg);
+.theme-btn:active,
+.menu-toggle:active {
+  transform: translateY(1px);
 }
 
-.lg-dock-ic {
-  display: grid;
-  place-items: center;
-}
-
-.lg-dock-ic svg {
+.theme-btn svg,
+.menu-toggle svg {
   width: 19px;
   height: 19px;
 }
 
-/* Tooltip flutuante em Liquid Glass ao passar o mouse no Dock */
-.lg-dock-meta {
-  position: absolute;
-  left: calc(100% + 16px);
-  top: 50%;
-  transform: translateY(-50%) translateX(-6px);
-  padding: 7px 12px;
-  border-radius: 12px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03)),
-    color-mix(in srgb, var(--surface) 84%, transparent);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid color-mix(in srgb, var(--fg) 16%, var(--line));
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.22s ease, transform 0.22s ease;
+.menu-toggle {
+  display: none;
 }
 
-.lg-dock-meta strong {
-  font: 600 0.8rem var(--f-body);
+.mobile-drawer {
+  display: none;
+  border-top: 1px solid var(--rule-soft);
+  background: var(--bg);
+  padding: 12px clamp(20px, 4vw, 56px) 20px;
+}
+
+.mobile-drawer.is-open {
+  display: grid;
+  gap: 6px;
+}
+
+.mobile-drawer a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 46px;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--rule-soft);
+  text-decoration: none;
+  font: 600 1rem var(--f-body);
   color: var(--fg);
 }
 
-.lg-dock-meta small {
-  font-size: 0.68rem;
-  color: var(--b1);
+/* ==========================================================================
+   Primeira Dobra — Fólio Autoral + Prancha I (Medições de Obras)
+   ========================================================================== */
+
+.opening-spread {
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg);
 }
 
-.lg-dock-btn:hover .lg-dock-meta {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
+.opening-grid {
+  width: 100%;
+  min-height: calc(100svh - 65px);
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
 }
 
-.liquid-dock-depth {
+.folio-col {
+  padding:
+    clamp(32px, 4.5vw, 56px)
+    clamp(24px, 3.6vw, 48px)
+    clamp(28px, 4vw, 44px)
+    max(clamp(20px, 4vw, 56px), calc((100vw - 1320px) / 2 + 56px));
+  border-right: 1px solid var(--rule);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding-top: 8px;
-  border-top: 1px solid color-mix(in srgb, var(--fg) 12%, transparent);
-  width: 100%;
+  justify-content: space-between;
+  gap: 32px;
 }
 
-.liquid-depth-bar {
-  width: 4px;
-  height: 36px;
-  border-radius: 4px;
-  background: color-mix(in srgb, var(--fg) 14%, transparent);
-  overflow: hidden;
-  position: relative;
+.folio-lead h1 {
+  font-weight: 800;
+  font-size: clamp(3rem, 5.2vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--fg);
 }
 
-.liquid-depth-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 0%;
-  background: linear-gradient(180deg, var(--b3), var(--b1));
-  border-radius: 4px;
-  transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+.folio-thesis {
+  margin-top: 20px;
+  font: 500 clamp(1.18rem, 1.65vw, 1.48rem)/1.34 var(--f-editorial);
+  color: var(--fg);
+  max-width: 38ch;
 }
 
-#dockCoord {
-  font-size: 0.62rem;
+.folio-summary {
+  margin-top: 14px;
+  font-size: 1rem;
+  line-height: 1.58;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+.folio-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+/* Taxonomia 2x2 Aberta (Sem Cards) */
+.folio-taxonomy {
+  padding-top: 20px;
+  border-top: 1px solid var(--rule-soft);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 24px;
+}
+
+.tax-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 48px;
+  padding: 4px 0;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease-out);
+}
+
+.tax-link strong {
+  font: 700 1rem/1.2 var(--f-display);
+  color: var(--fg);
+  transition: color 0.2s var(--ease-out);
+}
+
+.tax-link span {
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.tax-link:hover {
+  transform: translateY(-2px);
+}
+
+.tax-link:hover strong {
   color: var(--b1);
-  letter-spacing: -0.02em;
+}
+
+/* Coluna Direita da Primeira Dobra: Prancha I Viva */
+.hero-plate-col {
+  background: var(--bg-alt);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-plate-head {
+  background: var(--forest);
+  color: var(--on-forest);
+  padding:
+    24px
+    max(clamp(20px, 4vw, 56px), calc((100vw - 1320px) / 2 + 56px))
+    24px
+    clamp(24px, 3.5vw, 44px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hero-plate-head h2 {
+  color: var(--on-forest);
+  font-size: clamp(1.45rem, 2.2vw, 1.9rem);
+}
+
+.plate-stamp {
+  font: 500 0.76rem var(--f-mono);
+  letter-spacing: 0.04em;
+  color: var(--stamp-on-forest);
+  border: 1px solid var(--stamp-on-forest);
+  padding: 4px 10px;
+  border-radius: var(--r-xs);
+}
+
+.hero-plate-body {
+  padding:
+    18px
+    max(clamp(20px, 4vw, 56px), calc((100vw - 1320px) / 2 + 56px))
+    18px
+    clamp(24px, 3.5vw, 44px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  flex: 1;
 }
 
 /* ==========================================================================
-   Palco Espacial 3D (Câmera no Eixo Z)
+   Seções de Fluxo Vertical & Faixas Estruturais
    ========================================================================== */
-.spatial-viewport {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  perspective: 1400px;
-  perspective-origin: 52% 50%;
-  overflow: hidden;
-  z-index: 5;
+
+.atlas-section {
+  padding-block: clamp(56px, 8vw, 96px);
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg);
 }
 
-.spatial-stage {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
+.atlas-section.is-alt {
+  background: var(--bg-alt);
 }
 
-.spatial-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+.atlas-section.is-forest {
+  background: var(--forest);
+  color: var(--on-forest);
+  border-bottom-color: var(--forest-deep);
+}
+
+.atlas-section.is-forest h2,
+.atlas-section.is-forest h3 {
+  color: var(--on-forest);
+}
+
+.section-intro {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 68px 28px 18px 102px;
-  pointer-events: none;
-  will-change: transform, opacity, filter;
-  transition:
-    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.65s ease,
-    filter 0.65s ease;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: clamp(28px, 4vw, 44px);
 }
 
-/* Camada em Foco (Z: 0m) */
-.spatial-layer.is-active {
-  transform: translate3d(0, 0, 0) scale(1);
-  opacity: 1;
-  filter: blur(0px);
-  pointer-events: auto;
-  z-index: 10;
+.atlas-section.is-forest .section-intro {
+  border-bottom-color: var(--rule-on-forest);
 }
 
-/* Camada Ultrapassada (Passa pela câmera em direção ao usuário: Z +520px) */
-.spatial-layer.is-past {
-  transform: translate3d(0, 0, 520px) scale(1.34);
-  opacity: 0;
-  filter: blur(16px);
-  pointer-events: none;
-  z-index: 12;
-}
-
-/* Próxima Camada ao Fundo (Aguardando o mergulho: Z -440px) */
-.spatial-layer.is-next {
-  transform: translate3d(0, 0, -440px) scale(0.74);
-  opacity: 0;
-  filter: blur(10px);
-  pointer-events: none;
-  z-index: 8;
-}
-
-/* Camadas Profundas (Z -880px) */
-.spatial-layer.is-deep {
-  transform: translate3d(0, 0, -880px) scale(0.52);
-  opacity: 0;
-  filter: blur(18px);
-  pointer-events: none;
-  z-index: 4;
-}
-
-.layer-inner {
-  width: 100%;
-  max-width: 1220px;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* Cabeçalhos de Camada */
-.sec-head {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 22px;
-  max-width: 100%;
-}
-
-.sec-head p {
+.section-intro p {
+  font-family: var(--f-editorial);
   color: var(--muted);
-  font-size: 0.98rem;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  max-width: 54ch;
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  width: fit-content;
-  font: 600 0.75rem var(--f-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--b1);
+.atlas-section.is-forest .section-intro p {
+  color: var(--muted-on-forest);
 }
 
-.eyebrow::before {
-  content: "";
-  width: 16px;
-  height: 2px;
-  background: var(--b1);
-  border-radius: 2px;
+/* Rodapé Final */
+.site-footer {
+  background: var(--forest-deep);
+  color: var(--muted-on-forest);
+  padding-block: 26px;
+  font-size: 0.9rem;
 }
 
-/* Rodapé Espacial na Camada 05 */
-.contact-stage {
-  gap: 24px;
-}
-
-.spatial-footer {
+.footer-inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px 24px;
-  padding: 16px 22px;
-  border-radius: var(--r-pill);
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface) 75%, transparent);
-  color: var(--muted);
-  font-size: 0.85rem;
+  gap: 14px 24px;
 }
 
-.surface-btn {
-  border: 1px solid var(--line-strong);
-  background: var(--moss-pill);
-  color: var(--b1);
-  padding: 6px 14px;
-  border-radius: var(--r-pill);
-  font-size: 0.78rem;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
-}
-
-.surface-btn:hover {
-  border-color: var(--b1);
-  transform: translateY(-2px);
+.footer-inner a {
+  color: var(--on-forest);
+  font-weight: 600;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* ==========================================================================
-   Responsividade Mobile & Tablet (<= 960px e <= 640px)
+   Responsividade (<= 980px e <= 680px)
    ========================================================================== */
-@media (max-width: 960px) {
-  app-header {
-    top: max(10px, env(safe-area-inset-top, 10px));
-    left: 12px;
-    right: 12px;
-  }
 
-  .top-hud {
-    padding: 6px 8px 6px 14px;
-    gap: 8px;
-  }
-
-  /* Dock Lateral transforma-se em Dock Inferior em Liquid Glass no Mobile */
-  .liquid-dock {
-    left: 50%;
-    top: auto;
-    bottom: max(12px, env(safe-area-inset-bottom, 12px));
-    transform: translateX(-50%);
-    max-width: calc(100vw - 20px);
-  }
-
-  .liquid-dock-glass {
-    flex-direction: row;
-    padding: 8px 10px;
-    border-radius: 26px;
-    gap: 8px;
-  }
-
-  .liquid-dock-items {
-    flex-direction: row;
-    gap: 4px;
-  }
-
-  .liquid-active-pill {
-    top: 8px;
-    left: 10px;
-    width: 40px;
-    height: 40px;
-    border-radius: 14px;
-  }
-
-  .lg-dock-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 14px;
-  }
-
-  .liquid-dock-depth {
+@media (max-width: 980px) {
+  .site-nav {
     display: none;
   }
 
-  .lg-dock-meta {
-    display: none !important;
+  .menu-toggle {
+    display: inline-grid;
   }
 
-  /* Camadas 100% fixas no mobile, contidas estritamente entre HUD e Dock */
-  .spatial-layer {
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: calc(max(10px, env(safe-area-inset-top, 10px)) + 50px) 14px calc(max(12px, env(safe-area-inset-bottom, 12px)) + 64px) 14px;
+  .opening-grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
   }
 
-  .layer-inner {
-    width: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    margin-block: auto;
-    justify-content: flex-start;
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: none;
+  .folio-col {
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+    padding-inline: clamp(20px, 4vw, 40px);
   }
 
-  .layer-inner::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-@media (hover: none) {
-  .lg-dock-meta {
-    display: none !important;
+  .hero-plate-head,
+  .hero-plate-body {
+    padding-inline: clamp(20px, 4vw, 40px);
   }
 }
 
 @media (max-width: 640px) {
-  app-header {
-    left: 10px;
-    right: 10px;
-  }
-
-  .top-hud {
-    padding: 5px 6px 5px 12px;
-    gap: 6px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  .brand {
-    gap: 7px;
-    font-size: 0.88rem;
-    min-width: 0;
-  }
-
-  .brand svg {
-    width: 17px;
-    height: 17px;
-  }
-
-  .brand-branch {
-    display: none;
-  }
-
-  .hud-telemetry {
-    display: none;
-  }
-
-  .hud-actions {
-    gap: 5px;
-    flex-shrink: 0;
-  }
-
-  .hud-contact-btn {
-    height: 30px;
-    padding: 0 10px;
-    font-size: 0.74rem;
-    gap: 5px;
-  }
-
-  .hud-step-btn,
-  .icon-btn {
-    width: 30px;
-    height: 30px;
-  }
-
-  .liquid-dock {
-    max-width: calc(100vw - 16px);
-  }
-
-  .liquid-dock-glass {
-    padding: 5px 7px;
-    gap: 4px;
-  }
-
-  .liquid-dock-items {
-    gap: 2px;
-  }
-
-  .liquid-active-pill {
-    top: 5px;
-    left: 7px;
-    width: 36px;
-    height: 36px;
-    border-radius: 12px;
-  }
-
-  .lg-dock-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 12px;
-  }
-
-  .spatial-footer {
-    border-radius: 20px;
-    flex-direction: column;
-    align-items: flex-start;
+  .site-header {
     gap: 10px;
+    padding-inline: 16px;
+  }
+
+  .brand-loc,
+  .cta-full {
+    display: none;
+  }
+
+  .cta-short {
+    display: inline;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .header-actions .btn-header-cta {
+    padding-inline: 12px;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .folio-col {
+    padding: 22px 16px 20px;
+    gap: 18px;
+  }
+
+  .folio-lead h1 {
+    font-size: clamp(2.35rem, 9.5vw, 2.85rem);
+  }
+
+  .folio-thesis {
+    margin-top: 12px;
+    font-size: 1.06rem;
+    line-height: 1.32;
+  }
+
+  .folio-summary {
+    margin-top: 10px;
+    font-size: 0.92rem;
+    line-height: 1.48;
+  }
+
+  .folio-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .folio-actions .btn:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .folio-actions .btn {
+    width: 100%;
+    justify-content: center;
+    padding-inline: 12px;
+  }
+
+  .folio-taxonomy {
+    padding-top: 14px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+  }
+
+  .tax-link {
+    min-height: 44px;
+    padding: 2px 0;
+  }
+
+  .tax-link strong {
+    font-size: 0.92rem;
+  }
+
+  .tax-link span {
+    font-size: 0.76rem;
+    line-height: 1.28;
+  }
+
+  .hero-plate-head {
+    padding: 18px 16px;
+  }
+
+  .hero-plate-body {
+    padding: 20px 16px 24px;
+  }
+}
+
+@media (max-width: 340px) {
+  .folio-taxonomy,
+  .folio-actions {
+    grid-template-columns: 1fr;
   }
 }
