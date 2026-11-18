@@ -17,13 +17,12 @@ export const TYPED_ROLES = [
 ];
 
 export const NAV_SECTIONS = [
-  { id: 'inicio', label: 'Início', short: '00', icon: 'compass' },
-  { id: 'sobre', label: 'Categorias', short: '01', icon: 'layers' },
-  { id: 'projetos', label: 'Projetos', short: '02', icon: 'git-branch' },
-  { id: 'commits', label: 'Git Log', short: '03', icon: 'git-commit' },
-  { id: 'stack', label: 'Stack', short: '04', icon: 'cpu' },
-  { id: 'formacao', label: 'Formação', short: '05', icon: 'milestone' },
-  { id: 'contato', label: 'Contato', short: '06', icon: 'send' }
+  { id: 'inicio', label: 'Início' },
+  { id: 'projetos', label: 'Projetos' },
+  { id: 'atuacao', label: 'Atuação' },
+  { id: 'commits', label: 'Git Log' },
+  { id: 'formacao', label: 'Formação & Stack' },
+  { id: 'contato', label: 'Contato' }
 ];
 
 export const ENGINEERING_PILLARS = [
@@ -141,59 +140,74 @@ export const GIT_GRAPH_BRANCHES = [
 export const FLA_QUIXADA_MODULES = [
   {
     tab: 'Jogos',
-    title: 'Próximos e últimos jogos',
-    badge: 'API ao vivo',
-    items: ['Calendário em tempo real', 'Escalações dos jogos', 'Dados da API Cartola/Globo']
+    title: 'Calendário e transmissão no consulado',
+    badge: 'Integração API ao vivo',
+    rows: [
+      { label: 'Flamengo × Fortaleza · Brasileirão', val: 'Dom · 16h00' },
+      { label: 'Transmissão confirmada na sede Quixadá', val: 'Telão aberto' },
+      { label: 'Escalação sincronizada via API externa', val: '11 titulares' }
+    ]
   },
   {
     tab: 'Bolão',
-    title: 'Bolão de palpites',
-    badge: 'Interativo',
-    items: ['Sorteio por slots', 'Status de pagamento', 'Ranking e resultado do bolão']
+    title: 'Bolão interativo da rodada',
+    badge: 'Sorteio & Ranking',
+    interactive: 'bolao',
+    rows: [
+      { label: 'Líder parcial do ranking mensal', val: '48 pts · Confirmado' },
+      { label: 'Cota da rodada validada no sistema', val: 'Status: Pago' }
+    ]
   },
   {
     tab: 'Cardápio',
-    title: 'Cardápio do bar',
-    badge: 'Preços dinâmicos',
-    items: ['Preço para associados', 'Preço para não associados', 'Máscara de moeda BRL']
+    title: 'Cardápio da sede com tabela dupla',
+    badge: 'Preços em BRL',
+    interactive: 'cardapio',
+    items: [
+      { label: 'Porção Carne de Sol c/ Macaxeira', member: 'R$ 34,90', regular: 'R$ 44,90' },
+      { label: 'Balde 5 Long Necks Geladas', member: 'R$ 39,00', regular: 'R$ 49,00' },
+      { label: 'Espetinho Completo na Brasa', member: 'R$ 14,00', regular: 'R$ 18,00' }
+    ]
   },
   {
     tab: 'Loja',
-    title: 'Loja do consulado',
-    badge: 'E-commerce',
-    items: ['Produtos com galeria', 'Controle de estoque', 'Máscara de moeda BRL']
+    title: 'Loja oficial do consulado',
+    badge: 'Estoque & Moeda BRL',
+    rows: [
+      { label: 'Camisa Oficial Consulado Fla-Quixadá', val: 'R$ 119,90 · 14 un.' },
+      { label: 'Copo Térmico Gravado a Laser', val: 'R$ 45,00 · 8 un.' },
+      { label: 'Boné Bordado Edição Sertão Central', val: 'R$ 59,90 · 5 un.' }
+    ]
   },
   {
     tab: 'Notícias',
-    title: 'Portal de notícias',
-    badge: 'Publicação',
-    items: ['Upload com imagem', 'Datas com fuso horário correto', 'Validação de caracteres']
+    title: 'Portal de comunicados e ações',
+    badge: 'Fuso UTC-3 corrigido',
+    rows: [
+      { label: 'Caravana oficial Quixadá rumo ao Castelão', val: '22 jun 2026' },
+      { label: 'Campanha solidária de arrecadação na sede', val: '19 jun 2026' },
+      { label: 'Novo horário de atendimento aos associados', val: '05 jun 2026' }
+    ]
   },
   {
     tab: 'Admin',
-    title: 'Painel administrativo',
+    title: 'Painel administrativo protegido',
     badge: 'JWT + RBAC',
-    items: ['CRUD de todas as entidades', 'Autenticação com JWT', 'Perfis admin e super-admin']
+    rows: [
+      { label: 'Sessão autenticada via token JWT', val: 'Perfil: super-admin' },
+      { label: 'Controle de acesso por papel (RBAC)', val: 'admin / super-admin' },
+      { label: 'Escopo CRUD liberado', val: 'Jogos, Bolão, Loja e Sócios' }
+    ]
   }
 ];
 
 export const EXTRA_PROJECTS = [
   {
-    title: 'Planning Poker Scrum',
-    summary: 'Salas colaborativas com WebSockets e gestão de histórias de usuário',
-    meta: 'Node.js · Socket.io · SQLite',
-    colorVar: '--b3',
-    defaultOpen: true,
-    description: 'Aplicação web colaborativa para times Scrum realizarem sessões de Planning Poker e refinamento de histórias de usuário em tempo real, sem necessidade de autenticação por senha. Implementa sequência de Fibonacci, detecção automática de consenso (média e moda), timer de discussão sincronizado e interface mobile-first.',
-    chips: ['Node.js', 'Express', 'Socket.io', 'SQLite', 'WebSockets', 'Scrum', 'Mobile-First'],
-    repoUrl: 'https://github.com/cicerocarnauba/planing-poker'
-  },
-  {
     title: 'Agenda Cultural',
     summary: 'Gestão de eventos culturais com controle de permissões e relatórios em PDF',
     meta: 'Python · PostgreSQL',
     colorVar: '--b1',
-    defaultOpen: false,
+    defaultOpen: true,
     description: 'Sistema web para gestão de eventos e espaços culturais com quatro níveis de permissão (visitante, comum, gerente e admin), dashboard mensal e geração de relatórios de inscritos em PDF. Atuação direta no controle de acesso por perfil (RBAC), modelagem das tabelas relacionais, desenvolvimento do dashboard e validação de CPF.',
     chips: ['Python', 'Panel', 'PostgreSQL', 'SQLAlchemy'],
     repoUrl: 'https://github.com/cicerocarnauba/Agenda_Cultural'
