@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-18T13:56:00Z",
+  "title": "Design System: Portfólio Cícero Higor — Atlas de Campo & Sistemas",
+  "extensions": {
+    "colorMeta": {
+      "eucalyptus-primary": {
+        "role": "primary",
+        "displayName": "Eucalyptus Primary",
+        "canonical": "#1C6E46",
+        "tonalRamp": ["#0A2919", "#113D27", "#145435", "#1C6E46", "#2E8B5D", "#58AE82", "#9BD1B4", "#E1F1E8"]
+      },
+      "herbarium-forest": {
+        "role": "primary",
+        "displayName": "Herbarium Forest",
+        "canonical": "#133A27",
+        "tonalRamp": ["#081A11", "#0C261A", "#133A27", "#1F5239", "#346E51", "#5D9478", "#9DC2AE", "#E1EBE3"]
+      },
+      "mineral-ochre": {
+        "role": "secondary",
+        "displayName": "Mineral Ochre",
+        "canonical": "#9A5812",
+        "tonalRamp": ["#331C04", "#542F08", "#78440D", "#9A5812", "#BE7628", "#DCA05E", "#E8B872", "#F7EBD9"]
+      },
+      "pine-jade": {
+        "role": "tertiary",
+        "displayName": "Pine Jade",
+        "canonical": "#146657",
+        "tonalRamp": ["#072620", "#0D4036", "#146657", "#1F8572", "#3CA38F", "#71BFB0", "#AEDCD3", "#E4F4F0"]
+      },
+      "cotton-paper": {
+        "role": "neutral",
+        "displayName": "Cotton Paper",
+        "canonical": "#F3F5EE",
+        "tonalRamp": ["#1C241E", "#354A3E", "#5A6E61", "#85968A", "#B2BFB4", "#D5DDD5", "#E9EEE4", "#F3F5EE"]
+      },
+      "botanical-ink": {
+        "role": "neutral",
+        "displayName": "Botanical Ink",
+        "canonical": "#0F1E16",
+        "tonalRamp": ["#08110C", "#0F1E16", "#1D3327", "#354A3E", "#566E60", "#82988B", "#BDC8BE", "#EEF2EE"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Nome autoral na abertura do fólio principal."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Títulos principais de seção e cabeçalho da Prancha I."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Títulos de pranchas de sistemas, frentes de engenharia e subseções."
+      },
+      "editorial": {
+        "displayName": "Editorial Lead",
+        "purpose": "Tese de abertura e parágrafos introdutórios de seção em Literata."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido técnico e descrições de repositórios (máx. 68ch)."
+      },
+      "label": {
+        "displayName": "Label / Spec",
+        "purpose": "Hashes Git, datas, selos catalográficos e métricas tabulares em JetBrains Mono."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-float",
+        "value": "0 10px 28px -8px rgba(15, 30, 22, 0.16)",
+        "purpose": "Reservada apenas a elementos flutuantes efêmeros; pranchas e containers permanecem planos."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Curva exponencial padrão para respostas de botões, gaveta móvel e entrada única do fólio."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "680px" },
+      { "name": "lg", "value": "980px" },
+      { "name": "wrap", "value": "1320px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação primária em verde-eucalipto com alvo mínimo de 44px e resposta tátil vertical.",
+      "html": "<a href=\"#projetos\" class=\"ds-btn-primary\">Explorar sistemas reais</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 20px; border-radius: 2px; border: 1px solid #1C6E46; background: #1C6E46; color: #F3F5EE; font: 600 0.94rem/1.1 'Public Sans', sans-serif; text-decoration: none; cursor: pointer; transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.18s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { background: #145435; border-color: #145435; transform: translateY(-2px); } .ds-btn-primary:active { transform: translateY(1px); } .ds-btn-primary:focus-visible { outline: 2px solid #1C6E46; outline-offset: 3px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Ação secundária com fio perimetral verde-herbário e ícone vetorial inline.",
+      "html": "<a href=\"https://github.com/cicerocarnauba\" class=\"ds-btn-outline\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22\"/></svg><span>Ver código no GitHub</span></a>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 10px 20px; border-radius: 2px; border: 1px solid #133A27; background: transparent; color: #0F1E16; font: 600 0.94rem/1.1 'Public Sans', sans-serif; text-decoration: none; transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.18s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-outline:hover { background: #EEF2E9; transform: translateY(-2px); } .ds-btn-outline:active { transform: translateY(1px); } .ds-btn-outline:focus-visible { outline: 2px solid #1C6E46; outline-offset: 3px; }"
+    },
+    {
+      "name": "Header Navigation Link",
+      "kind": "nav",
+      "description": "Navegação editorial com sublinhado progressivo e área de clique de 44px.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#projetos\" aria-current=\"true\">Projetos</a><a href=\"#atuacao\">Atuação</a><a href=\"#commits\">Git Log</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 6px; background: #F3F5EE; padding: 8px 12px; border-bottom: 1px solid #133A27; } .ds-nav a { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; color: #0F1E16; font: 600 0.92rem 'Public Sans', sans-serif; text-decoration: none; } .ds-nav a::after { content: ''; position: absolute; left: 12px; right: 12px; bottom: 8px; height: 1.5px; background: #1C6E46; transform: scaleX(0); transform-origin: left center; transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1); } .ds-nav a:hover, .ds-nav a[aria-current='true'] { color: #1C6E46; } .ds-nav a:hover::after, .ds-nav a[aria-current='true']::after { transform: scaleX(1); }"
+    },
+    {
+      "name": "Specification Tag",
+      "kind": "chip",
+      "refersTo": "spec-tag",
+      "description": "Etiqueta técnica retangular em JetBrains Mono para linguagens e protocolos.",
+      "html": "<ul class=\"ds-tags\"><li>React Native</li><li>SQLite</li><li>PostgreSQL</li></ul>",
+      "css": ".ds-tags { display: flex; gap: 8px; list-style: none; padding: 0; margin: 0; } .ds-tags li { padding: 5px 11px; border: 1px solid #BDC8BE; border-radius: 2px; background: #FAFBF7; color: #0F1E16; font: 500 0.78rem/1.2 'JetBrains Mono', monospace; }"
+    },
+    {
+      "name": "Specimen Specification Strip",
+      "kind": "custom",
+      "description": "Barra tabular aberta delimitada por fios horizontais de 1px para metadados arquiteturais.",
+      "html": "<dl class=\"ds-spec-strip\"><div><dt>Atuação</dt><dd>Full Stack &amp; Arquitetura</dd></div><div><dt>Persistência</dt><dd>SQLite + PostgreSQL</dd></div><div><dt>Sincronização</dt><dd>Fila local + API REST</dd></div></dl>",
+      "css": ".ds-spec-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 14px 0; border-top: 1px solid #133A27; border-bottom: 1px solid #133A27; margin: 0; background: #E9EEE4; } .ds-spec-strip dt { font: 500 0.74rem/1.2 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; color: #354A3E; } .ds-spec-strip dd { margin: 4px 0 0; font: 700 1rem/1.25 'Bricolage Grotesque', sans-serif; color: #0F1E16; }"
+    },
+    {
+      "name": "Interactive Apparatus Frame",
+      "kind": "card",
+      "refersTo": "apparatus-frame",
+      "description": "Bancada interativa de sistema real com barra de controle e registros vivos.",
+      "html": "<div class=\"ds-apparatus\"><div class=\"ds-app-bar\"><span>Sincronização Canteiro (SQLite)</span><button type=\"button\" class=\"ds-sim-btn\">Simular queda de rede</button></div><div class=\"ds-rec\"><span>Fundação Bloco B2 · 84%</span><b>SINCRONIZADO</b></div></div>",
+      "css": ".ds-apparatus { border: 1px solid #133A27; border-radius: 2px; background: #FAFBF7; overflow: hidden; } .ds-app-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border-bottom: 1px solid #BDC8BE; background: #F3F5EE; font: 500 0.78rem 'JetBrains Mono', monospace; color: #354A3E; } .ds-sim-btn { min-height: 44px; padding: 6px 12px; border: 1px solid #133A27; border-radius: 2px; background: #FAFBF7; color: #0F1E16; font: 600 0.78rem 'JetBrains Mono', monospace; cursor: pointer; } .ds-sim-btn:hover { background: #EEF2E9; } .ds-rec { display: flex; justify-content: space-between; padding: 12px 14px; font: 600 0.84rem 'Public Sans', sans-serif; color: #0F1E16; } .ds-rec b { font: 600 0.72rem 'JetBrains Mono', monospace; color: #1C6E46; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "O Atlas de Campo de Sistemas",
+    "overview": "O sistema visual estrutura o portfólio de Engenharia de Software como um caderno técnico de campo e atlas catalográfico inspirado na precisão botânica e topográfica do Sertão Central cearense (Quixadá). Em vez de caixas escuras com brilhos artificiais ou scroll-jacking, o conteúdo repousa sobre planos abertos de papel algodão sálvia divididos por fios contínuos e ancorados por faixas inteiras de verde-herbário profundo.\n\nCada projeto real é tratado como uma prancha catalogada aberta: ficha de especificação tabular, taxonomia técnica e um aparelho interativo vivo construído diretamente em HTML, CSS, SVG e Canvas. A densidade equilibra respiro editorial nos cabeçalhos com precisão tabular nas bancadas de código, permitindo leitura contínua e escaneabilidade imediata tanto em monitores largos quanto em celulares de 360px.",
+    "keyCharacteristics": [
+      "Planos abertos de papel algodão sálvia alternados com faixas estruturais sólidas em verde-herbário profundo.",
+      "Fios catalográficos contínuos (1px a 1.5px) substituindo sombras difusas e caixas aninhadas.",
+      "Quatro vozes tipográficas com papéis estritos: Bricolage Grotesque para escala estrutural, Literata para teses e aberturas editoriais, Public Sans para leitura contínua e JetBrains Mono exclusivamente para hashes, datas, métricas e estados técnicos.",
+      "Cantos secos de prancha técnica (2px a 3px) e alvos de toque mínimos de 44px em todos os controles interativos.",
+      "Modo escuro opcional ('Herbário Noturno') derivado da mesma matriz florestal."
+    ],
+    "rules": [
+      {
+        "name": "The Forest Band Rule",
+        "body": "O verde nunca aparece apenas como pílula decorativa solta sobre fundo neutro: superfícies Herbarium Forest assumem faixas inteiras da página e cabeçalhos completos de prancha para ancorar o ritmo vertical.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tinted Neutral Rule",
+        "body": "Nenhum texto secundário, borda ou superfície usa cinza acromático puro; todos os tons neutros carregam subtom botânico verde-sálvia.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Kicker Rule",
+        "body": "Títulos (h1–h4) nunca são precedidos por pequenos rótulos em caixa-alta (eyebrows); metadados técnicos ficam alinhados lateralmente na mesma linha de base ou em barras de especificação abaixo do título.",
+        "section": "typography"
+      },
+      {
+        "name": "The Honest Mono Rule",
+        "body": "JetBrains Mono é restrita a código, hashes de commits, ramos Git, datas, grandezas numéricas e estados de sistema — nunca usada como fantasia estética para parágrafos comuns.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Sheet Rule",
+        "body": "Superfícies em repouso não possuem box-shadow nem blur; a separação entre regiões ocorre apenas por contraste tonal de papel e fios de 1px.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do estruturar novos projetos como pranchas abertas numeradas (Prancha I, Prancha II...) acompanhadas de barra <dl class=\"spec-strip\"> e demonstração funcional real.",
+      "Do manter todos os botões, abas, filtros e links de controle fora de parágrafos com altura mínima de 44px e espaçamento mínimo de 8px.",
+      "Do usar Literata nos parágrafos introdutórios de seção (.section-intro p) para sustentar a voz editorial do atlas do início ao fim da página.",
+      "Do utilizar exclusivamente ícones <svg> inline com traço consistente (1.8px–2px) e tematizar superfícies nativas do navegador (::selection, barra de rolagem e foco)."
+    ],
+    "donts": [
+      "Don't adicionar eyebrows ou pequenos rótulos em caixa-alta acima de h1, h2, h3 ou h4.",
+      "Don't criar grades de cards iguais com [ícone + título + texto], cards dentro de cards ou bordas laterais grossas (border-left > 1px).",
+      "Don't introduzir backdrop-filter: blur(), brilho neon, animações de digitação (typewriter), carrosséis automáticos ou travas de rolagem (overflow: hidden no body).",
+      "Don't usar caracteres Unicode ou emojis (✓, ☕, ⚡, ↗) no lugar de ícones vetoriais desenhados."
+    ]
+  }
+}
+

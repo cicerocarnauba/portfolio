@@ -3,4 +3,9 @@
 .DS_Store
 Thumbs.db
 node_modules/
+.impeccable/questions/
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/build/
+.impeccable/config.local.json
 
