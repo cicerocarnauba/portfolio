@@ -1,25 +1,17 @@
 /**
  * Componente <stack-section>
- * Renderiza as faixas de marquee infinito e os grupos de tecnologias da seção Stack.
+ * Matriz técnica aberta das linguagens, bancos de dados, infraestrutura e processos utilizados.
  */
 
-import { STACK_DATA } from '../data/portfolio-data.js';
-
-function renderMarqueePills(items) {
-  const primary = items.map((item) => `<span class="pill">${item}</span>`).join('');
-  const duplicate = items
-    .map((item) => `<span class="pill" aria-hidden="true">${item}</span>`)
-    .join('');
-  return primary + duplicate;
-}
+import { STACK_DATA } from '../data/portfolio-data.js?v=13';
 
 export class StackSection extends HTMLElement {
   connectedCallback() {
-    const groupsHtml = STACK_DATA.groups
+    const colsHtml = STACK_DATA.groups
       .map(
         (grp) => `
-        <div class="grp rv" style="--c:var(${grp.colorVar})">
-          <h3><i></i>${grp.title}</h3>
+        <div class="stack-col">
+          <h4>${grp.title}</h4>
           <ul>
             ${grp.items.map((item) => `<li>${item}</li>`).join('')}
           </ul>
@@ -29,18 +21,18 @@ export class StackSection extends HTMLElement {
       .join('');
 
     this.innerHTML = `
-      <div class="marq rv">
-        <div class="track">${renderMarqueePills(STACK_DATA.marqueeRow1)}</div>
-      </div>
-      <div class="marq rev rv">
-        <div class="track">${renderMarqueePills(STACK_DATA.marqueeRow2)}</div>
-      </div>
-      <div class="groups">
-        ${groupsHtml}
+      <div class="stack-block">
+        <div class="stack-block-head">
+          <h3>Repertório técnico</h3>
+        </div>
+        <div class="stack-matrix">
+          ${colsHtml}
+        </div>
       </div>
     `;
   }
 }
 
-customElements.define('stack-section', StackSection);
-
+if (!customElements.get('stack-section')) {
+  customElements.define('stack-section', StackSection);
+}

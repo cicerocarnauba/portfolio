@@ -1,194 +1,48 @@
 /**
  * Componente <timeline-section>
- * Renderiza uma linha do tempo horizontal infográfica com círculos conectados
- * por uma linha fluida, alternando os nós em cima e embaixo, com animação
- * cinematográfica sequencial de surgimento ao entrar na camada Z: -480m.
+ * Trajetória acadêmica aberta do ensino técnico à graduação em Engenharia de Software na UFC.
  */
 
-import { EDUCATION_TIMELINE } from '../data/portfolio-data.js';
+import { EDUCATION_TIMELINE } from '../data/portfolio-data.js?v=13';
+
+const GITHUB_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`;
 
 export class TimelineSection extends HTMLElement {
   connectedCallback() {
-    // Lista acessível para leitores de tela
-    const srItems = EDUCATION_TIMELINE.map(
-      (item) => `<li>${item.period}: ${item.title} na instituição ${item.institution}. ${item.description}</li>`
-    ).join('');
-
-    // Colunas visuais da linha do tempo horizontal
-    const columnsHtml = EDUCATION_TIMELINE.map((item, idx) => {
+    const nodesHtml = EDUCATION_TIMELINE.map((item) => {
       const repoBtn = item.repoUrl
         ? `
-          <a class="m-repo-link" href="${item.repoUrl}" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/>
-            </svg>
+          <a class="edu-repo-link" href="${item.repoUrl}" target="_blank" rel="noopener noreferrer">
+            ${GITHUB_SVG}
             <span>${item.repoLabel}</span>
           </a>
         `
         : '';
 
-      const statusTag = item.isCurrent
-        ? `<span class="m-status-pill"><span class="status-dot" aria-hidden="true"></span>${item.status}</span>`
-        : '';
-
-      const delay = idx * 0.4;
-
-      if (item.position === 'top') {
-        return `
-          <div class="h-milestone pos-top" style="--c:var(${item.colorVar}); --delay:${delay}s; --ty:16px;">
-            <div class="m-circle-wrap">
-              <div class="m-circle ${item.isCurrent ? 'current' : ''}">
-                <span class="m-year">${item.year}</span>
-                <span class="m-sub">${item.period}</span>
-              </div>
-              <div class="m-stem down">
-                <span class="m-pin"></span>
-              </div>
-            </div>
-            <div class="m-content">
-              <div class="m-header">
-                ${statusTag}
-                <h3 class="m-title">${item.title}</h3>
-                <div class="m-accent-bar"></div>
-              </div>
-              <p class="m-inst">${item.institution}</p>
-              <p class="m-desc">${item.description}</p>
-              ${repoBtn}
-            </div>
-          </div>
-        `;
-      }
-
-      // position === 'bottom'
       return `
-        <div class="h-milestone pos-bottom" style="--c:var(${item.colorVar}); --delay:${delay}s; --ty:-16px;">
-          <div class="m-content">
-            <div class="m-header">
-              <h3 class="m-title">${item.title}</h3>
-              <div class="m-accent-bar"></div>
-            </div>
-            <p class="m-inst">${item.institution}</p>
-            <p class="m-desc">${item.description}</p>
+        <article class="edu-node ${item.isCurrent ? 'is-current' : ''}" style="--c:var(${item.colorVar})">
+          <div class="edu-marker-row">
+            <span class="edu-year-badge">${item.year}</span>
+            <span class="edu-period">${item.period}</span>
           </div>
-          <div class="m-circle-wrap">
-            <div class="m-stem up">
-              <span class="m-pin"></span>
-            </div>
-            <div class="m-circle ${item.isCurrent ? 'current' : ''}">
-              <span class="m-year">${item.year}</span>
-              <span class="m-sub">${item.period}</span>
-            </div>
+          <div class="edu-body">
+            <h3>${item.title}</h3>
+            <p class="edu-inst">${item.institution}<span class="edu-period-inline"> · ${item.period}</span>${item.isCurrent ? ' · Em andamento' : ''}</p>
+            <p class="edu-desc">${item.description}</p>
+            ${repoBtn}
           </div>
-        </div>
+        </article>
       `;
     }).join('');
 
     this.innerHTML = `
-      <ol class="sr">${srItems}</ol>
-      <div class="h-timeline-scroll">
-        <div class="h-timeline-wrap" id="timelineWrap">
-          <svg class="h-timeline-curve" viewBox="0 0 1000 390" preserveAspectRatio="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="timelineCurveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="var(--b3)" />
-                <stop offset="50%" stop-color="var(--b2)" />
-                <stop offset="100%" stop-color="var(--b1)" />
-              </linearGradient>
-            </defs>
-            <path class="wave-path" d="M 0 195 C 80 195, 110 82, 190 82 C 290 82, 370 308, 500 308 C 630 308, 710 82, 810 82 C 890 82, 920 195, 1000 195" />
-          </svg>
-          <svg class="v-timeline-curve" viewBox="0 0 360 420" preserveAspectRatio="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="timelineVertGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="var(--b3)" />
-                <stop offset="50%" stop-color="var(--b2)" />
-                <stop offset="100%" stop-color="var(--b1)" />
-              </linearGradient>
-            </defs>
-            <path class="wave-path-v" d="M 38 0 C 38 25, 38 45, 38 68 C 38 135, 322 135, 322 205 C 322 275, 38 275, 38 348 C 38 380, 38 400, 38 420" />
-          </svg>
-          <div class="h-timeline-track">
-            ${columnsHtml}
-          </div>
-        </div>
+      <div class="edu-timeline">
+        ${nodesHtml}
       </div>
     `;
-
-    // Ativa animação imediatamente se já estiver visível ou por padrão
-    this.playAnimation();
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const wrap = this.querySelector('.h-timeline-wrap');
-      if (wrap) wrap.classList.add('is-animated');
-    }
-
-    this.initVerticalPathSync();
-  }
-
-  initVerticalPathSync() {
-    const wrap = this.querySelector('#timelineWrap');
-    const vSvg = this.querySelector('.v-timeline-curve');
-    const vPath = this.querySelector('.wave-path-v');
-    if (!wrap || !vSvg || !vPath) return;
-
-    const updatePath = () => {
-      if (window.innerWidth > 820) return;
-      const W = wrap.offsetWidth;
-      const H = wrap.offsetHeight;
-      if (W === 0 || H === 0) return;
-
-      const milestones = Array.from(wrap.querySelectorAll('.h-milestone'));
-      if (milestones.length < 3) return;
-
-      const circleEl = milestones[0].querySelector('.m-circle');
-      const cRadius = circleEl ? circleEl.offsetWidth / 2 : 34;
-
-      const pts = milestones.map((m) => ({
-        top: m.offsetTop,
-        bottom: m.offsetTop + m.offsetHeight
-      }));
-
-      vSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-
-      const xLeft = Math.round(cRadius + 2);
-      const xRight = Math.round(W - cRadius - 2);
-      const g1 = Math.round((pts[0].bottom + pts[1].top) / 2);
-      const g2 = Math.round((pts[1].bottom + pts[2].top) / 2);
-      const r = 14;
-
-      const d = [
-        `M ${xLeft} 0`,
-        `L ${xLeft} ${g1 - r}`,
-        `Q ${xLeft} ${g1} ${xLeft + r} ${g1}`,
-        `L ${xRight - r} ${g1}`,
-        `Q ${xRight} ${g1} ${xRight} ${g1 + r}`,
-        `L ${xRight} ${g2 - r}`,
-        `Q ${xRight} ${g2} ${xRight - r} ${g2}`,
-        `L ${xLeft + r} ${g2}`,
-        `Q ${xLeft} ${g2} ${xLeft} ${g2 + r}`,
-        `L ${xLeft} ${H}`
-      ].join(' ');
-
-      vPath.setAttribute('d', d);
-    };
-
-    if ('ResizeObserver' in window) {
-      new ResizeObserver(updatePath).observe(wrap);
-    }
-    window.addEventListener('resize', updatePath);
-    requestAnimationFrame(updatePath);
-    this._updateVerticalPath = updatePath;
-  }
-
-  playAnimation() {
-    const wrap = this.querySelector('.h-timeline-wrap');
-    if (!wrap) return;
-    if (this._updateVerticalPath) this._updateVerticalPath();
-    wrap.classList.remove('is-animated');
-    // Força reflow para reiniciar a animação quando o usuário mergulha na camada Formação
-    void wrap.offsetWidth;
-    wrap.classList.add('is-animated');
   }
 }
 
-customElements.define('timeline-section', TimelineSection);
+if (!customElements.get('timeline-section')) {
+  customElements.define('timeline-section', TimelineSection);
+}
