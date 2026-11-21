@@ -14,10 +14,8 @@ export class AppHeader extends HTMLElement {
     this.innerHTML = `
       <header class="site-header" id="top">
         <a class="brand-mark" href="#inicio">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 22v-9"/>
-            <path d="M12 13C7.5 13 5 9.5 5 5c4.5 0 7 2.5 7 8Z"/>
-            <path d="M12 15c4-1 6.5-4 7-8.5-4 .5-6.5 3-7 8.5Z"/>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5 4h2v2H5zM17 4h2v2h-2zM7 6h2v2H7zM15 6h2v2h-2zM5 8h14v2h2v2h2v6h-2v-4h-2v4h-2v-2H7v2H5v-4H3v4H1v-6h2v-2h2V8zm2 2v2h2v-2H7zm8 0v2h2v-2h-2zM7 18h4v2H7zM13 18h4v2h-4z"/>
           </svg>
           <span>Cícero Higor</span>
           <span class="brand-loc">· Quixadá, CE</span>

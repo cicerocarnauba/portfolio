@@ -4,7 +4,7 @@
 
 import { CONTACT } from './data/portfolio-data.js?v=13';
 
-import './components/app-header.js?v=13';
+import './components/app-header.js?v=15';
 import './components/offline-diagram.js?v=13';
 import './components/browser-preview.js?v=13';
 import './components/poker-preview.js?v=14';
